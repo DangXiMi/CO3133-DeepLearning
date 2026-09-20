@@ -1,8 +1,6 @@
 # CO3133 - Deep Learning and Its Applications - Course Project
 
-## Assignment 1: Foundations of Deep Learning Pipelines and Architectures
-
-**Topic:** From Linear Models to Modern Sequence Models: A Comparative Study for Image Classification
+## Course Information
 
 **Course:** Deep Learning and Its Applications  
 **Course code:** CO3133  
@@ -51,17 +49,13 @@ python -m venv .venv
 ```bash
 pip install -r requirements.txt
 ```
+---
 
+## Assignment 1: Foundations of Deep Learning Pipelines and Architectures
 
-## Assignment 1
+**Topic:** From Linear Models to Modern Sequence Models: A Comparative Study for Image Classification
 
-### How to run the code
-
-```bash
-
-```
-
-### Assignment 1 mandatory models to be implemented and compared:
+### Mandatory models to be implemented and compared:
 
 - Linear / Softmax classifier
 
@@ -80,3 +74,9 @@ pip install -r requirements.txt
 - Development/debugging only: MNIST
 
 - Optional extension: CIFAR-10
+
+### How to run the code
+
+```bash
+
+```
