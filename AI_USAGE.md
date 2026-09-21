@@ -39,3 +39,27 @@
 - Affected files: utils/dataloader.py; assignment1/eda.ipynb; utils/get_data.py (deleted)
 - Responsible member: Nguyen Van An
 - Sources: torchvision documentation; official CIFAR-10 checksum (MD5 c58f30108f718f92721af3b95e74349a)
+
+**Entry 3 — Duplicate image detection (eda.ipynb)**
+- Tool: Gemini
+- Used by: Huynh Vuong Khang
+- Stage: A1 M1 development — EDA (21 Sep 2026)
+- Purpose: Plotting images for each class with selected pixels highlighted.
+- Prompt summary: "Use matplotlib.pyplot to plot 5 grayscale images for a class, and highlight user-specified pixels", "List possible values for cmap and pixel value range"
+- AI contribution: implemented a baseline for extracting images of a specified class using **torch.nonzero**, plotting the images and highlights with **matplotlib.pyplot.imshow**, suggested alternives for "cmap" arguments other than the "grayscale" color map.
+- Student verification: reviewed official PyTorch and Matplotlib documents, rewritten pixel masking, color map and highlighting configuration.   
+- Affected files: assignment1/eda.ipynb
+- Responsible member: Huynh Vuong Khang
+- Sources: [matplotlib.pyplot.imshow](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow), [matplotlib.colors.ListedColormap](https://matplotlib.org/stable/api/_as_gen/matplotlib.colors.ListedColormap.html), [torch.nonzero](https://docs.pytorch.org/docs/2.14/generated/torch.nonzero.html).
+
+**Entry 4 — Image augmentation (eda.ipynb)**
+- Tool: Gemini
+- Used by: Huynh Vuong Khang
+- Stage: A1 M1 development — EDA (21 Sep 2026)
+- Purpose: Searching PyTorch tools for randomly flipping images of class 5, 7 and 9 (shoe-like items).
+- Prompt summary: "Without giving code, give me pytorch methods to implement random horizontal image flip for class 5, 7 and 9"
+- AI contribution: listed **torch.isin** for masking images of class 5, 7 and 9, **torch.rand** to implement probability, **torch.flip** to implement flipping operation.
+- Student verification: reviewed official PyTorch documents for usage and return values, manually implemented a script based on given tools.   
+- Affected files: assignment1/eda.ipynb
+- Responsible member: Huynh Vuong Khang
+- Sources: [torch.isin](https://docs.pytorch.org/docs/2.14/generated/torch.isin.html#torch.isin), [torch.rand](https://docs.pytorch.org/docs/2.14/generated/torch.rand.html#torch.rand), [torch.flip](https://docs.pytorch.org/docs/2.14/generated/torch.flip.html#torch-flip)
