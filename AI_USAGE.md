@@ -62,4 +62,17 @@
 - Student verification: reviewed official PyTorch documents for usage and return values, manually implemented a script based on given tools.   
 - Affected files: assignment1/eda.ipynb
 - Responsible member: Huynh Vuong Khang
-- Sources: [torch.isin](https://docs.pytorch.org/docs/2.14/generated/torch.isin.html#torch.isin), [torch.rand](https://docs.pytorch.org/docs/2.14/generated/torch.rand.html#torch.rand), [torch.flip](https://docs.pytorch.org/docs/2.14/generated/torch.flip.html#torch-flip)
+- Sources: [torch.isin](https://docs.pytorch.org/docs/2.14/generated/torch.isin.html#torch.isin), [torch.rand](https://docs.pytorch.org/docs/2.14/generated/torch.rand.html#torch.rand), [torch.flip](https://docs.pytorch.org/docs/2.14/generated/torch.flip.html#torch-flip) 
+
+**Entry 5 — Model module conventions pass (models/)**
+- Tool: opencode CLI (GLM-5.3)
+- Used by: Nguyen Van An
+- Stage: A1 M2 development — model modules (22 Sep 2026)
+- Purpose: Apply the team's module conventions (docstrings, formatting, parametrized constructors) to the Linear/MLP/CNN models and fix bugs.
+- Prompt summary: "Reformat the code by adding docstrings and help me organize the comments, plus check for any bugs I made along the way too"
+- AI contribution: added docstrings; fixed a broken flat import, a missing num_para method, and a double flatten.
+- Student verification: architectures were written by the user, who reviewed each diff; refactors verified by real runs (parameter counts asserted; epoch-1 metrics matched pre-refactor runs exactly).
+- Affected files: models/cnn.py, models/mlp.py, models/linear.py, training_loop.py
+- Responsible member: Nguyen Van An
+- Sources: PyTorch documentation; CO3133 handbook §11.1
+
