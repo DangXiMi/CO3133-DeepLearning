@@ -10,8 +10,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 from sklearn.metrics import f1_score
-from models.linear import LinearClassifer as Linear
+from models.linear import LinearClassifier as Linear
 from models.mlp import MLP
+from models.cnn import CNNClassifier
 
 from utils.dataloader import load_split, get_dataloaders
 
