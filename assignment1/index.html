@@ -92,6 +92,31 @@
         </ul>
     </div>
 
+    <div class="section">
+        <h3> Progress (updated 06 Oct 2026)</h3>
+        <p><strong>Milestones:</strong> M1 Draft complete (23 Sep). M2 Final due 21 Oct — in progress.</p>
+        <h4>Completed work</h4>
+        <ul>
+            <li><strong>Data pipeline:</strong> unified <code>load_split()</code> and DataLoader construction in
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/utils/dataloader.py" target="_blank">utils/dataloader.py</a>
+                — torchvision-based, stratified seed-42 train/validation split shared by all models
+                (Fashion-MNIST primary; MNIST for debugging; CIFAR-10 optional).</li>
+            <li><strong>EDA:</strong> class distribution, pixel statistics, near-black pixel study,
+                sample visualization and flip-augmentation experiments in
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/eda.ipynb" target="_blank">assignment1/eda.ipynb</a>.</li>
+            <li><strong>Training/validation loop:</strong>
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/training_loop.py" target="_blank">assignment1/training_loop.py</a>
+                — cross-entropy training with accuracy and macro-F1 tracking, seeded.</li>
+            <li><strong>Models implemented:</strong> Linear (7,850 params, ~85.6% val acc),
+                MLP (235,146 params, ~89.3%), CNN (491,530 params, ~90.7% after 2 epochs),
+                and the recurrent family through a shared scaffold — GRU (61,962), LSTM (82,186)
+                and a plain-RNN baseline (21,514).</li>
+            <li><strong>In progress:</strong> Transformer model; final five-model comparison;
+                report, slides, and video.</li>
+        </ul>
+        <p><strong>AI Usage Disclosure:</strong> <a href="AI_USAGE.md" target="_blank">assignment1/AI_USAGE.md</a></p>
+    </div>
+
 
 </body>
 </html>
