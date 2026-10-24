@@ -22,62 +22,55 @@ def sinusoidal_positional_encoding(seq_len, d_model):
             f"d_model={d_model} must be even for sinusoidal positional encoding."
         )
 
+    # For d_model = 6, the rows look like:
+    # token 1: [ sin(0),      cos(0),      sin(0),      cos(0),      sin(0),      cos(0)      ]
+    # token 2: [ sin(f0),     cos(f0),     sin(f1),     cos(f1),     sin(f2),     cos(f2)     ]
+    # token 3: [ sin(2*f0),   cos(2*f0),   sin(2*f1),   cos(2*f1),   sin(2*f2),   cos(2*f2)   ]
+    # ...
+    # where fi = 1 / 10000^(2i/d_model)
+
     position = torch.arange(seq_len, dtype=torch.float32).unsqueeze(1)
-    div_term = torch.exp(
+
+    # 1 / 10000^(2i/d_model) = exp((2i/d_model) * -log(10000))
+    #                        = exp(2i * -log(10000) / d_model)
+    freq = torch.exp(
         torch.arange(0, d_model, 2, dtype=torch.float32)
         * (-math.log(10000.0) / d_model)
     )
 
     pe = torch.zeros(seq_len, d_model, dtype=torch.float32)
-    pe[:, 0::2] = torch.sin(position * div_term)
-    pe[:, 1::2] = torch.cos(position * div_term)
+    # slicing is start:stop:step so 0::2 means start from 0, to the end of
+    # array, with step 2. similar for 1::2
+    pe[:, 0::2] = torch.sin(position * freq)
+    pe[:, 1::2] = torch.cos(position * freq)
 
     return pe.unsqueeze(0)  # (1, seq_len, d_model)
+                            # unsqueeze(0) helps broadcast over (B,)
 
 
 class TransformerClassifier(nn.Module):
-    """Transformer image classifier: reads the image as a sequence of rows and attends over them.
-        Tokenization:
-            Each image row is one token, exactly as in RNNClassifier. For an
-            image (C, H, W), timestep t is row t, so the sequence length is
-            T = H and each token has C*W values. After
-            permute(0, 2, 1, 3).flatten(2), the batch is (B, H, C*W).
-            For Fashion-MNIST this is 28 tokens of 28 features each.
-        Token projection:
-            A linear layer maps each raw row token from C*W to d_model, the
-            width attention operates on.
-        Positional encoding:
-            Self-attention is permutation-invariant: without position
-            information, shuffling the rows would only shuffle the outputs.
-            A fixed sinusoidal encoding of shape (1, T, d_model) is added to
-            the projected tokens, so the model knows which row each token came
-            from. The leading 1 broadcasts over the batch.
-        Attention (inside each encoder layer):
-            The layer projects the tokens to queries Q, keys K and values V.
-            With h heads each head has width d_model/h. For one head:
-                scores = Q K^T / sqrt(d_head)          (T, T)
-                A      = softmax(scores, dim=-1)
-                head   = A V
-            Each token therefore attends to every other token, and the heads
-            are concatenated and projected back to d_model. A residual
-            connection and LayerNorm follow the attention sublayer, then a
-            position-wise feed-forward network with another residual and
-            LayerNorm. There is no causal mask here: this is classification,
-            not language modelling, so every row may see the whole image.
-        Pooling and output:
-            The encoder returns (B, T, d_model). Mean pooling over the T token
-            outputs gives one (B, d_model) vector per image, and a linear head
-            maps it to class logits.
-        Input:
-            - input_shape (tuple): image shape (C, H, W), no batch dimension
-            - d_model (int): token embedding width; must be divisible by nhead
-            - nhead (int): number of attention heads
-            - num_layers (int): number of stacked encoder layers
-            - dim_feedforward (int): hidden width of each feed-forward network
-            - dropout (float): dropout probability inside the encoder
-            - num_classes (int): number of output logits
+    """Transformer image classifier over a sequence of image rows.
+
+        Each image row is one token: T = H tokens of C*W values. A linear layer
+        projects each token to d_model, fixed sinusoidal positions are added so the
+        model can distinguish row order, and a Transformer encoder applies
+        multi-head self-attention. For each head, attention computes Q, K, V and
+        softmax(QK^T / sqrt(d_head)) V, so every token can attend to every other
+        token; there is no causal mask. Mean pooling over the T token outputs gives
+        one (B, d_model) vector per image, which the linear head maps to class
+        logits.
+
+        Args:
+            input_shape (tuple): image shape (C, H, W), no batch dimension.
+            d_model (int): token embedding width; must be divisible by nhead.
+            nhead (int): number of attention heads.
+            num_layers (int): number of stacked encoder layers.
+            dim_feedforward (int): hidden width of each feed-forward network.
+            dropout (float): dropout probability inside the encoder.
+            num_classes (int): number of output logits.
+
         Output:
-            - logits of shape (B, num_classes), no softmax
+            logits of shape (B, num_classes), no softmax.
     """
 
     def __init__(self,

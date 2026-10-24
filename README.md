@@ -14,9 +14,9 @@
 
 | Full name | Student ID | Role | GitHub |
 |---|---:|---|---|
-| Nguyen Van An | 2352013 | Decided later | [BanAnA9205](https://github.com/BanAnA9205) |
-| Vo Le Hai Dang | 2352257 | Decided later | [DangXiMi](https://github.com/DangXiMi) |
-| Huynh Vuong Khang | 2350011 | Decided later | [hvhvk](https://github.com/hvhvk) |
+| Nguyen Van An | 2352013 | Data pipeline, models, experiments | [BanAnA9205](https://github.com/BanAnA9205) |
+| Vo Le Hai Dang | 2352257 | Landing page, repository coordination | [DangXiMi](https://github.com/DangXiMi) |
+| Huynh Vuong Khang | 2350011 | EDA and visualization | [hvhvk](https://github.com/hvhvk) |
 
 **Group code repository:**  
 [https://github.com/DangXiMi/CO3133-DeepLearning](https://github.com/DangXiMi/CO3133-DeepLearning)
@@ -141,11 +141,11 @@ Test metrics on the official 10,000-image test set; checkpoints selected by vali
 
 | Model | Params | Test accuracy | Test macro-F1 | Train (s) | Inference (ms/sample) |
 |---|---:|---:|---:|---:|---:|
-| Linear | 7,850 | 84.10% | 84.15% | 9.3 | 0.005 |
-| MLP | 235,146 | 87.89% | 87.89% | 12.0 | 0.007 |
-| CNN | 455,946 | 91.90% | 91.86% | 20.9 | 0.011 |
-| GRU | 61,962 | 88.93% | 88.85% | 14.5 | 0.007 |
-| Transformer | 69,450 | 88.71% | 88.69% | 34.2 | 0.013 |
+| Linear | 7,850 | 84.10% | 84.15% | 11.0 | 0.005 |
+| MLP | 235,146 | 87.89% | 87.89% | 13.4 | 0.007 |
+| CNN | 455,946 | 91.83% | 91.78% | 20.6 | 0.010 |
+| GRU | 61,962 | 88.93% | 88.85% | 58.0 | 0.028 |
+| Transformer | 69,450 | 88.71% | 88.69% | 36.7 | 0.012 |
 
 The reported run is tagged `a1-m2-final` in this repository.
 
@@ -182,6 +182,7 @@ assignment1/
   results/             metrics, histories, curves, confusion matrices, examples
 utils/
   dataloader.py        unified torchvision loading and stratified split
+  experiment_utils.py  timing and figure helpers for the A1 notebook
 ```
 
 ---

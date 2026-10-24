@@ -276,11 +276,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Linear</td><td>7,850</td><td>8</td><td>85.89%</td><td>85.94%</td><td>84.10%</td><td>84.15%</td><td>9.3</td><td>0.005</td></tr>
-                <tr><td>MLP</td><td>235,146</td><td>8</td><td>89.55%</td><td>89.57%</td><td>87.89%</td><td>87.89%</td><td>12.0</td><td>0.007</td></tr>
-                <tr class="best"><td>CNN</td><td>455,946</td><td>10</td><td>92.85%</td><td>92.81%</td><td>91.90%</td><td>91.86%</td><td>20.9</td><td>0.011</td></tr>
-                <tr><td>GRU</td><td>61,962</td><td>8</td><td>90.15%</td><td>90.10%</td><td>88.93%</td><td>88.85%</td><td>14.5</td><td>0.007</td></tr>
-                <tr><td>Transformer</td><td>69,450</td><td>8</td><td>89.60%</td><td>89.59%</td><td>88.71%</td><td>88.69%</td><td>34.2</td><td>0.013</td></tr>
+                <tr><td>Linear</td><td>7,850</td><td>8</td><td>85.89%</td><td>85.94%</td><td>84.10%</td><td>84.15%</td><td>11.0</td><td>0.005</td></tr>
+                <tr><td>MLP</td><td>235,146</td><td>8</td><td>89.55%</td><td>89.57%</td><td>87.89%</td><td>87.89%</td><td>13.4</td><td>0.007</td></tr>
+                <tr class="best"><td>CNN</td><td>455,946</td><td>8</td><td>92.80%</td><td>92.77%</td><td>91.83%</td><td>91.78%</td><td>20.6</td><td>0.010</td></tr>
+                <tr><td>GRU</td><td>61,962</td><td>8</td><td>90.13%</td><td>90.09%</td><td>88.93%</td><td>88.85%</td><td>58.0</td><td>0.028</td></tr>
+                <tr><td>Transformer</td><td>69,450</td><td>8</td><td>89.60%</td><td>89.59%</td><td>88.71%</td><td>88.69%</td><td>36.7</td><td>0.012</td></tr>
             </tbody>
         </table>
         <p>
@@ -320,9 +320,9 @@
     <div class="section">
         <h2>6. Comparison and Discussion</h2>
         <p>
-            The CNN is the strongest model on this protocol: 91.90% test accuracy and
-            91.86% macro-F1. It is 3.0 points above the GRU, 3.2 points above the
-            Transformer, 4.0 points above the MLP, and 7.8 points above the linear
+            The CNN is the strongest model on this protocol: 91.83% test accuracy and
+            91.78% macro-F1. It is 2.9 points above the GRU, 3.1 points above the
+            Transformer, 3.9 points above the MLP, and 7.7 points above the linear
             classifier.
         </p>
         <p>
@@ -333,9 +333,9 @@
             rows; they can model order along the vertical axis, but they do not have an
             explicit 2-D neighborhood operator. The GRU reaches 88.93% with only 61,962
             parameters, showing that the row-sequence representation is still useful.
-            The Transformer (69,450 parameters) is close behind at 88.71%, but its
-            training time is 34.2 s, the highest of the five, because self-attention is
-            more expensive per step on this small sequence.
+            The Transformer (69,450 parameters) is close behind at 88.71%. The manual
+            GRU loop is the slowest to train (58.0 s) because each batch runs 28
+            single-step cells; the Transformer takes 36.7 s.
         </p>
         <p>
             The parameter/accuracy trade-off is not monotonic. The MLP has 235,146
@@ -352,9 +352,9 @@
             <strong>Shirt, T-shirt/top, Pullover, and Coat</strong>. These classes have
             similar silhouettes at 28×28 resolution, and grayscale removes color cues.
             The CNN reduces this confusion but does not eliminate it: its largest
-            off-diagonal counts are Shirt → T-shirt/top (95), Shirt → Coat (90),
-            T-shirt/top → Shirt (79), Coat → Pullover (62), Shirt → Pullover (60), and
-            Ankle boot → Sneaker (48). Shirt remains the hardest class for every model;
+            off-diagonal counts are Shirt → T-shirt/top (94), Shirt → Coat (84),
+            T-shirt/top → Shirt (78), Shirt → Pullover (62), Pullover → Shirt (52),
+            and Coat → Pullover (49). Shirt remains the hardest class for every model;
             its CNN F1 is 0.761, compared with 0.601 for the linear model.
         </p>
         <p>
@@ -400,6 +400,7 @@
                 <a href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment1/models" target="_blank">models/</a>,
                 <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/training_loop.py" target="_blank">training_loop.py</a>,
                 <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/utils/dataloader.py" target="_blank">utils/dataloader.py</a>,
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/utils/experiment_utils.py" target="_blank">utils/experiment_utils.py</a>,
                 <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/eda.ipynb" target="_blank">eda.ipynb</a>.
             </li>
             <li><strong>Checkpoints:</strong>
@@ -428,7 +429,7 @@
 
     <div class="footer">
         CO3133 - Deep Learning and Its Applications · Semester 261 · Group G-03<br>
-        Results generated on 24 Oct 2026.
+        Results generated on 25 Oct 2026.
     </div>
 
 </body>
