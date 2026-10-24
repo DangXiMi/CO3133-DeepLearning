@@ -8,7 +8,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            max-width: 960px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
             color: #1d1d1f;
@@ -35,15 +35,6 @@
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
-        .badge-construction {
-            display: inline-block;
-            background: #d18600;
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
         .footer {
             text-align: center;
             color: #6a737d;
@@ -66,6 +57,75 @@
             background: #0366d6;
             color: white;
         }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+        }
+        th, td {
+            border: 1px solid #d8dee4;
+            padding: 0.5rem 0.6rem;
+            text-align: right;
+        }
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+        th {
+            background: #f0f2f5;
+        }
+        tr:nth-child(even) td {
+            background: #fafbfc;
+        }
+        table.methodology td:nth-child(2),
+        table.methodology td:nth-child(3),
+        table.methodology th:nth-child(2),
+        table.methodology th:nth-child(3) {
+            text-align: left;
+        }
+        .best {
+            font-weight: 700;
+            background: #e6f4ea !important;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+        figure {
+            margin: 0;
+            background: #fafbfc;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 0.6rem;
+        }
+        figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        figcaption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #57606a;
+            margin-top: 0.4rem;
+        }
+        code {
+            background: #f0f2f5;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .note {
+            background: #fff8e5;
+            border-left: 4px solid #d18600;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+        }
+        ul {
+            margin-top: 0.4rem;
+        }
     </style>
 </head>
 <body>
@@ -79,12 +139,12 @@
 
     <div class="section">
         <h1>📘 Assignment 1</h1>
-        
+
         <p><strong>Assignment Title:</strong> Foundations of Deep Learning Pipelines and Architectures: From Linear Models to Modern Sequence Models (A Comparative Study for Image Classification)</p>
         <p><strong>Course:</strong> CO3133 - Deep Learning and Its Applications (Semester 261)</p>
         <p><strong>Instructor:</strong> Le Thanh Sach</p>
-        
-        <h3> Group Members</h3>
+
+        <h3>Group Members</h3>
         <ul>
             <li>Nguyen Van An (2352013)</li>
             <li>Vo Le Hai Dang (2352257)</li>
@@ -93,30 +153,283 @@
     </div>
 
     <div class="section">
-        <h3> Progress (updated 06 Oct 2026)</h3>
-        <p><strong>Milestones:</strong> M1 Draft complete (23 Sep). M2 Final due 21 Oct — in progress.</p>
-        <h4>Completed work</h4>
-        <ul>
-            <li><strong>Data pipeline:</strong> unified <code>load_split()</code> and DataLoader construction in
-                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/utils/dataloader.py" target="_blank">utils/dataloader.py</a>
-                — torchvision-based, stratified seed-42 train/validation split shared by all models
-                (Fashion-MNIST primary; MNIST for debugging; CIFAR-10 optional).</li>
-            <li><strong>EDA:</strong> class distribution, pixel statistics, near-black pixel study,
-                sample visualization and flip-augmentation experiments in
-                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/eda.ipynb" target="_blank">assignment1/eda.ipynb</a>.</li>
-            <li><strong>Training/validation loop:</strong>
-                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/training_loop.py" target="_blank">assignment1/training_loop.py</a>
-                — cross-entropy training with accuracy and macro-F1 tracking, seeded.</li>
-            <li><strong>Models implemented:</strong> Linear (7,850 params, ~85.6% val acc),
-                MLP (235,146 params, ~89.3%), CNN (491,530 params, ~90.7% after 2 epochs),
-                and the recurrent family through a shared scaffold — GRU (61,962), LSTM (82,186)
-                and a plain-RNN baseline (21,514).</li>
-            <li><strong>In progress:</strong> Transformer model; final five-model comparison;
-                report, slides, and video.</li>
-        </ul>
-        <p><strong>AI Usage Disclosure:</strong> <a href="AI_USAGE.md" target="_blank">assignment1/AI_USAGE.md</a></p>
+        <h2>1. Problem Statement</h2>
+        <p>
+            Given a 28×28 grayscale image of a clothing item, predict one of ten
+            Fashion-MNIST classes. The task is a controlled comparison of five
+            architecture families under one data split and evaluation protocol:
+            a linear/softmax classifier, an MLP, a self-designed CNN, a GRU, and a
+            Transformer. The comparison uses accuracy, macro-F1, parameter count,
+            training time, inference time, learning curves, confusion matrices, and
+            qualitative examples — not accuracy alone.
+        </p>
     </div>
 
+    <div class="section">
+        <h2>2. Dataset and EDA</h2>
+        <p>
+            <strong>Dataset:</strong> Fashion-MNIST (Xiao et al., 2017), obtained through
+            <code>torchvision.datasets.FashionMNIST</code>; MIT license. It contains
+            70,000 28×28 grayscale images in 10 classes, with the official 60,000/10,000
+            train/test split.
+        </p>
+        <p>
+            <strong>Split:</strong> the 60,000 training images were split with
+            <code>train_test_split(test_size=0.2, stratify=y, random_state=42)</code>,
+            giving <strong>48,000 train / 12,000 validation / 10,000 test</strong> images.
+            The split is shared by every model. The dataset is balanced: 4,800 training,
+            1,200 validation, and 1,000 test images per class.
+        </p>
+        <p>
+            <strong>Preprocessing:</strong> images are converted to <code>float</code>,
+            scaled to [0, 1], then z-scored with the training-set mean
+            (0.2863) and standard deviation (0.3532). The same transform is applied to
+            validation and test. No augmentation is used in the main comparison.
+        </p>
+        <p>
+            <strong>EDA:</strong> class distribution, pixel-value and non-zero-pixel
+            distributions, near-black background statistics, and representative samples
+            per class are in
+            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/eda.ipynb" target="_blank">assignment1/eda.ipynb</a>.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>3. Methodology</h2>
+        <table class="methodology">
+            <thead>
+                <tr><th>Model</th><th>Input representation</th><th>Architecture</th><th>Parameters</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Linear</td>
+                    <td>Flattened 784-vector</td>
+                    <td>Linear(784 → 10)</td>
+                    <td>7,850</td>
+                </tr>
+                <tr>
+                    <td>MLP</td>
+                    <td>Flattened 784-vector</td>
+                    <td>784 → 256 → 128 → 10, ReLU</td>
+                    <td>235,146</td>
+                </tr>
+                <tr>
+                    <td>CNN</td>
+                    <td>28×28 image</td>
+                    <td>two [3×3 conv → ReLU → 2×2 max-pool] blocks, 32/64 channels; MLP head 3136 → 128 → 256 → 10</td>
+                    <td>455,946</td>
+                </tr>
+                <tr>
+                    <td>GRU</td>
+                    <td>28 row tokens, each 28-dimensional</td>
+                    <td>GRU(input 28, hidden 128), final hidden state → Linear(128 → 10)</td>
+                    <td>61,962</td>
+                </tr>
+                <tr>
+                    <td>Transformer</td>
+                    <td>28 row tokens, each 28-dimensional</td>
+                    <td>Linear(28 → 64), fixed sinusoidal positions, 2 encoder layers (4 heads, FFN 128), mean pooling → Linear(64 → 10)</td>
+                    <td>69,450</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            All models output raw logits and are trained with cross-entropy loss.
+            The CNN is self-designed and trained from scratch; no pretrained backbone is
+            used. The GRU and Transformer both read the image as 28 rows, so their
+            difference isolates recurrence versus self-attention.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>4. Experimental Setup</h2>
+        <ul>
+            <li><strong>Optimizer:</strong> Adam, learning rate 1e-3.</li>
+            <li><strong>Batch size:</strong> 64; <strong>epochs:</strong> 10 for every model.</li>
+            <li><strong>Loss:</strong> CrossEntropyLoss on raw logits.</li>
+            <li><strong>Gradient clipping:</strong> max norm 1.0 for all models.</li>
+            <li><strong>Seed:</strong> 42 (Python, NumPy, PyTorch CPU/CUDA).</li>
+            <li><strong>Checkpoint selection:</strong> best validation macro-F1; the selected checkpoint is evaluated on the 10,000-image test set.</li>
+            <li><strong>Augmentation / scheduler / early stopping:</strong> none; fixed 10-epoch budget.</li>
+            <li><strong>Hardware:</strong> NVIDIA GeForce RTX 3050 Laptop GPU (4 GB), CUDA 13.0.</li>
+            <li><strong>Software:</strong> Python 3.14.7, PyTorch 2.14.0, torchvision 0.29.0.</li>
+            <li><strong>Timing:</strong> training time covers 10 epochs including per-epoch validation and checkpointing; inference time is a full forward pass over the test set after warmup, excluding loss/metric computation.</li>
+        </ul>
+        <p>
+            Full configuration and per-epoch histories:
+            <a href="results/config.json" target="_blank">config.json</a>,
+            <a href="results/results.csv" target="_blank">results.csv</a>,
+            <a href="results/results.json" target="_blank">results.json</a>.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>5. Results</h2>
+        <p>Test metrics are on the official 10,000-image test set. The best checkpoint was selected by validation macro-F1.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th><th>Params</th><th>Best epoch</th>
+                    <th>Val acc</th><th>Val macro-F1</th>
+                    <th>Test acc</th><th>Test macro-F1</th>
+                    <th>Train (s)</th><th>Inference (ms/sample)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Linear</td><td>7,850</td><td>8</td><td>85.89%</td><td>85.94%</td><td>84.10%</td><td>84.15%</td><td>9.3</td><td>0.005</td></tr>
+                <tr><td>MLP</td><td>235,146</td><td>8</td><td>89.55%</td><td>89.57%</td><td>87.89%</td><td>87.89%</td><td>12.0</td><td>0.007</td></tr>
+                <tr class="best"><td>CNN</td><td>455,946</td><td>10</td><td>92.85%</td><td>92.81%</td><td>91.90%</td><td>91.86%</td><td>20.9</td><td>0.011</td></tr>
+                <tr><td>GRU</td><td>61,962</td><td>8</td><td>90.15%</td><td>90.10%</td><td>88.93%</td><td>88.85%</td><td>14.5</td><td>0.007</td></tr>
+                <tr><td>Transformer</td><td>69,450</td><td>8</td><td>89.60%</td><td>89.59%</td><td>88.71%</td><td>88.69%</td><td>34.2</td><td>0.013</td></tr>
+            </tbody>
+        </table>
+        <p>
+            Accuracy and macro-F1 are close for every model because the test set is
+            class-balanced. The CNN has the best test accuracy and macro-F1. The GRU is
+            the best sequence model on this split, narrowly ahead of the Transformer.
+        </p>
+
+        <h3>Training and validation curves</h3>
+        <div class="grid">
+            <figure><img src="results/curves/linear.png" alt="Linear curves"><figcaption>Linear</figcaption></figure>
+            <figure><img src="results/curves/mlp.png" alt="MLP curves"><figcaption>MLP</figcaption></figure>
+            <figure><img src="results/curves/cnn.png" alt="CNN curves"><figcaption>CNN</figcaption></figure>
+            <figure><img src="results/curves/gru.png" alt="GRU curves"><figcaption>GRU</figcaption></figure>
+            <figure><img src="results/curves/transformer.png" alt="Transformer curves"><figcaption>Transformer</figcaption></figure>
+        </div>
+
+        <h3>Confusion matrices</h3>
+        <div class="grid">
+            <figure><img src="results/confusion/linear.png" alt="Linear confusion matrix"><figcaption>Linear</figcaption></figure>
+            <figure><img src="results/confusion/mlp.png" alt="MLP confusion matrix"><figcaption>MLP</figcaption></figure>
+            <figure><img src="results/confusion/cnn.png" alt="CNN confusion matrix"><figcaption>CNN</figcaption></figure>
+            <figure><img src="results/confusion/gru.png" alt="GRU confusion matrix"><figcaption>GRU</figcaption></figure>
+            <figure><img src="results/confusion/transformer.png" alt="Transformer confusion matrix"><figcaption>Transformer</figcaption></figure>
+        </div>
+
+        <h3>Correct and incorrect predictions</h3>
+        <div class="grid">
+            <figure><img src="results/examples/linear.png" alt="Linear examples"><figcaption>Linear</figcaption></figure>
+            <figure><img src="results/examples/mlp.png" alt="MLP examples"><figcaption>MLP</figcaption></figure>
+            <figure><img src="results/examples/cnn.png" alt="CNN examples"><figcaption>CNN</figcaption></figure>
+            <figure><img src="results/examples/gru.png" alt="GRU examples"><figcaption>GRU</figcaption></figure>
+            <figure><img src="results/examples/transformer.png" alt="Transformer examples"><figcaption>Transformer</figcaption></figure>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>6. Comparison and Discussion</h2>
+        <p>
+            The CNN is the strongest model on this protocol: 91.90% test accuracy and
+            91.86% macro-F1. It is 3.0 points above the GRU, 3.2 points above the
+            Transformer, 4.0 points above the MLP, and 7.8 points above the linear
+            classifier.
+        </p>
+        <p>
+            The result is consistent with inductive bias. Convolution shares weights
+            across image positions and pools local neighborhoods, so it sees the 2-D
+            structure of clothing silhouettes directly. The MLP and linear model flatten
+            the image and lose locality. The GRU and Transformer read the image as 28
+            rows; they can model order along the vertical axis, but they do not have an
+            explicit 2-D neighborhood operator. The GRU reaches 88.93% with only 61,962
+            parameters, showing that the row-sequence representation is still useful.
+            The Transformer (69,450 parameters) is close behind at 88.71%, but its
+            training time is 34.2 s, the highest of the five, because self-attention is
+            more expensive per step on this small sequence.
+        </p>
+        <p>
+            The parameter/accuracy trade-off is not monotonic. The MLP has 235,146
+            parameters but is below the 61,962-parameter GRU, so capacity alone does not
+            explain performance. The CNN's advantage comes from the combination of
+            local feature extraction and a sufficiently large classifier head.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>7. Error Analysis</h2>
+        <p>
+            The dominant error group for every model is the upper-body clothing cluster:
+            <strong>Shirt, T-shirt/top, Pullover, and Coat</strong>. These classes have
+            similar silhouettes at 28×28 resolution, and grayscale removes color cues.
+            The CNN reduces this confusion but does not eliminate it: its largest
+            off-diagonal counts are Shirt → T-shirt/top (95), Shirt → Coat (90),
+            T-shirt/top → Shirt (79), Coat → Pullover (62), Shirt → Pullover (60), and
+            Ankle boot → Sneaker (48). Shirt remains the hardest class for every model;
+            its CNN F1 is 0.761, compared with 0.601 for the linear model.
+        </p>
+        <p>
+            The second group is footwear: Ankle boot ↔ Sneaker ↔ Sandal. The linear and
+            MLP models confuse these more often because they have no local shape
+            detector. The sequence models also confuse Shirt with T-shirt/top and Coat,
+            which suggests that row order alone does not capture the 2-D outline of a
+            garment.
+        </p>
+        <p>
+            Possible improvements: light augmentation (horizontal flips for shoes, small
+            translations), a patch-token Transformer instead of row tokens, stronger
+            regularization for the MLP/CNN heads, and a CNN + sequence hybrid. Because
+            the dataset is balanced, class-weighted loss is not the main issue here.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>8. Limitations and Conclusion</h2>
+        <p>
+            This comparison uses one dataset (Fashion-MNIST), one seed (42), a fixed
+            10-epoch budget, and no augmentation in the main pipeline. Hyperparameters
+            were not extensively tuned, and the sequence models use row tokens rather
+            than patch tokens. The reported differences should therefore be read as
+            results under this controlled protocol, not as universal claims about the
+            architecture families. A multi-seed mean ± standard deviation and a
+            patch-token ablation would strengthen the conclusion.
+        </p>
+        <p>
+            Under the shared split and protocol, the self-designed CNN is the best model
+            by both accuracy and macro-F1. The GRU is the best sequence model and is
+            competitive with far fewer parameters; the Transformer is close but slower
+            to train. The linear model and MLP establish the value of non-linear and
+            spatial inductive bias.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>9. Reproducibility and Deliverables</h2>
+        <ul>
+            <li><strong>Source code:</strong>
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/main.ipynb" target="_blank">main.ipynb</a>,
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment1/models" target="_blank">models/</a>,
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/training_loop.py" target="_blank">training_loop.py</a>,
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/utils/dataloader.py" target="_blank">utils/dataloader.py</a>,
+                <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/eda.ipynb" target="_blank">eda.ipynb</a>.
+            </li>
+            <li><strong>Checkpoints:</strong>
+                <a href="checkpoints/linear.pt">linear.pt</a>,
+                <a href="checkpoints/mlp.pt">mlp.pt</a>,
+                <a href="checkpoints/cnn.pt">cnn.pt</a>,
+                <a href="checkpoints/gru.pt">gru.pt</a>,
+                <a href="checkpoints/transformer.pt">transformer.pt</a>.
+            </li>
+            <li><strong>Results:</strong>
+                <a href="results/results.csv">results.csv</a>,
+                <a href="results/results.json">results.json</a>,
+                <a href="results/config.json">config.json</a>.
+            </li>
+            <li><strong>How to reproduce:</strong> open <code>assignment1/main.ipynb</code>
+                from the repository root and run all cells. The dataset downloads through
+                torchvision; artifacts are written to <code>assignment1/checkpoints</code>
+                and <code>assignment1/results</code>. The split is seed-42 stratified
+                48,000/12,000/10,000.</li>
+            <li><strong>AI usage disclosure:</strong>
+                <a href="AI_USAGE.md" target="_blank">assignment1/AI_USAGE.md</a>.</li>
+            <li><strong>Report, slides, video:</strong> links will be added when the
+                remaining M2 deliverables are finalized.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        CO3133 - Deep Learning and Its Applications · Semester 261 · Group G-03<br>
+        Results generated on 24 Oct 2026.
+    </div>
 
 </body>
 </html>
