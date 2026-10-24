@@ -6,9 +6,25 @@ import torch.nn as nn
 
 class RNNClassifier(nn.Module):
     """Recurrent image classifier: reads the image as a sequence and scores the final hidden state.
-        [TODO (you): sequence definition — handbook section 11.1.4 asks you to explain
-        the timestep definition, the input size, and the hidden representation.
-        Fill this in after reading d2l's GRU/LSTM sections.]
+        Sequence definition:
+            Each image is read one row at a time, top to bottom. For an image
+            (C, H, W), timestep t is row t, so the sequence length is T = H and
+            each step's input is that row's C*W pixel values. After
+            permute(0, 2, 1, 3).flatten(2), the batch has shape (B, H, C*W).
+            For Fashion-MNIST this is 28 timesteps of 28 features each.
+        Input size:
+            input_size = C*W, the number of values in one image row.
+        Hidden representation:
+            The recurrent cell updates h_t = f(x_t, h_{t-1}), where h_t has
+            hidden_size units. The final hidden state of the last layer, h_T,
+            summarizes the whole image and is mapped to class logits by a linear
+            head. LSTM also carries a cell state c_t, but only h_T is used for
+            classification.
+        Why GRU/LSTM:
+            A plain RNN applies the same weights at every step, so gradients can
+            vanish or explode over 28 steps. GRU/LSTM use gates to control what
+            is written, forgotten, and read. GRU has 3 gates and fewer
+            parameters; LSTM has 4 gates and a separate cell state.
         Input:
             - input_shape (tuple): image shape (C, H, W), no batch dimension
             - hidden_size (int): width of the recurrent hidden state
@@ -44,15 +60,12 @@ class RNNClassifier(nn.Module):
         # x: (B, C, H, W) -> sequence of image rows: (B, H, C*W) = (batch, seq, features)
         seq = x.permute(0, 2, 1, 3).flatten(2)
 
-        # The call returns two things:
-        #   output: (B, seq, hidden)  per-step hidden states, unused here
-        #   state:  h_n for RNN/GRU; (h_n, c_n) for LSTM, hence the tuple check
-        output, state = self.rnn(seq)
-        h_n = state[0] if isinstance(state, tuple) else state
-
-        # h_n: (num_layers, B, hidden); [-1] takes the LAST LAYER's final state,
-        # i.e. the memory after the whole image has been read
-        return self.head(h_n[-1])
+        # output: (B, seq, hidden), the last layer's hidden state at every step.
+        # output[:, -1] is the final step, i.e. the memory after the whole image
+        # has been read. This equals h_n[-1] for a uni-directional RNN/GRU/LSTM,
+        # and also works for LSTM without unpacking its (h_n, c_n) state tuple.
+        output, _ = self.rnn(seq)
+        return self.head(output[:, -1])
 
     def num_para(self):
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
