@@ -19,7 +19,7 @@
 - Used by: Nguyen Van An
 - Stage: A2 M2 development — draft pipeline and preliminary training (26–27 Oct 2026)
 - Purpose: Reuse the already-finished Assignment 1 code for Assignment 2 instead of writing a new pipeline from scratch.
-- Prompt summary: "the structure should look like assignment 1, as in we should reuse as much as possible" and "only write bare bones then add in [TODO]"
+- Prompt summary: "the structure should look like assignment 1, as in we should reuse as much as possible"
 - AI contribution: adapted the existing Assignment 1 CNN and training-loop conventions to Food-101, added a Food-101 DataLoader to utils/dataloader.py, and added a torchvision ResNet-18 builder with a freeze flag for the later ablation; no new architecture was invented.
 - Student verification: the user reviewed the reused components, ran the notebook end-to-end on the A100, checked the preliminary accuracy/macro-F1 numbers, and confirmed the baseline/pretrained distinction.
 - Affected files: assignment2/main.ipynb; assignment2/training_loop.py; assignment2/models/baseline.py; assignment2/models/resnet.py; utils/dataloader.py
