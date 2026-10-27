@@ -20,10 +20,10 @@ The dataset is downloaded automatically by `torchvision.datasets.FashionMNIST` i
 
 ## How to run
 
-The reproducible entry point is the executed notebook:
+The entry point is the executed notebook:
 
 ```bash
-jupyter notebook assignment1/main.ipynb
+jupyter notebook assignment1/notebooks/main.ipynb
 ```
 
 Run all cells from top to bottom. The notebook:
@@ -42,13 +42,13 @@ Test metrics on the official 10,000-image test set; checkpoints selected by vali
 
 | Model | Params | Test accuracy | Test macro-F1 | Train (s) | Inference (ms/sample) |
 |---|---:|---:|---:|---:|---:|
-| Linear | 7,850 | 84.10% | 84.15% | 11.0 | 0.005 |
-| MLP | 235,146 | 87.89% | 87.89% | 13.4 | 0.007 |
-| CNN | 455,946 | 91.83% | 91.78% | 20.6 | 0.010 |
-| GRU | 61,962 | 88.93% | 88.85% | 58.0 | 0.028 |
-| Transformer | 69,450 | 88.71% | 88.69% | 36.7 | 0.012 |
+| Linear | 7,850 | 84.10% | 84.15% | 9.6 | 0.005 |
+| MLP | 235,146 | 87.89% | 87.89% | 12.8 | 0.006 |
+| CNN | 455,946 | 91.79% | 91.79% | 20.5 | 0.010 |
+| GRU | 61,962 | 88.93% | 88.85% | 52.5 | 0.025 |
+| Transformer | 69,450 | 88.71% | 88.69% | 32.5 | 0.012 |
 
-The reported run is tagged `a1-m2-final` in this repository.
+Results may fluctuate slightly across reruns because of GPU non-determinism and mixed precision (AMP) where enabled.
 
 ## Outputs
 
@@ -68,9 +68,10 @@ assignment1/results/confusion/<model>.png
 assignment1/results/examples/<model>.png
 ```
 
-## Reproducibility notes
+## Run notes
 
-- Seed: 42, set for Python, NumPy, PyTorch CPU, and CUDA.
+- Seed: 42, set for NumPy and PyTorch.
+- Reruns are not bit-identical: GPU non-determinism and mixed precision (AMP) where enabled can cause small metric fluctuations.
 - Checkpoint selection: highest validation macro-F1.
 - Reported test numbers come from the selected checkpoint, not the final epoch.
 - Training time includes per-epoch validation and checkpointing; inference time is a full forward pass over the test set after warmup.
@@ -79,17 +80,20 @@ assignment1/results/examples/<model>.png
 
 ```text
 assignment1/
-  main.ipynb           five-model training and evaluation notebook
-  eda.ipynb            dataset EDA
-  training_loop.py     shared model-agnostic training/validation functions
-  models/
-    linear.py
-    mlp.py
-    cnn.py
-    rnn.py             GRU, LSTM, and plain RNN variants
-    transformer.py     row-token Transformer
+  notebooks/
+    main.ipynb         five-model training and evaluation notebook
+    eda.ipynb          dataset EDA
+  src/
+    training_loop.py   shared model-agnostic training/validation functions
+    models/
+      linear.py
+      mlp.py
+      cnn.py
+      rnn.py           GRU, LSTM, and plain RNN variants
+      transformer.py   row-token Transformer
   checkpoints/         best checkpoints from the reported run
   results/             metrics, histories, curves, confusion matrices, examples
+  materials/           report, slides, and video links for the final submission
 utils/
   dataloader.py        unified torchvision loading and stratified split
   experiment_utils.py  timing and figure helpers for the A1 notebook
@@ -98,6 +102,9 @@ utils/
 ## Links
 
 - [Assignment 1 page](index.html)
+- [Report](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/report.pdf)
+- [Slides](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/slides.pdf)
+- [Video](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/video.html)
 - [Results JSON](results/results.json)
 - [Results CSV](results/results.csv)
 - [Run configuration](results/config.json)

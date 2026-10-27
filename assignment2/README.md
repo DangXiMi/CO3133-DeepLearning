@@ -21,7 +21,7 @@
 ## How to run
 
 ```bash
-jupyter notebook assignment2/main.ipynb
+jupyter notebook assignment2/notebooks/main.ipynb
 ```
 
 The notebook:
@@ -62,9 +62,11 @@ assignment2/checkpoints/resnet18.pt
 
 ```text
 assignment2/
-  main.ipynb        training and evaluation notebook
-  training_loop.py  shared train/validation loop
-  models/
+  notebooks/
+    main.ipynb      training and evaluation notebook
+  src/
+    training_loop.py  shared train/validation loop
+    models/
     baseline.py     simple baseline (reuses Assignment 1 CNN)
     resnet.py       pretrained ResNet-18 builder
   checkpoints/      best checkpoints from the reported run

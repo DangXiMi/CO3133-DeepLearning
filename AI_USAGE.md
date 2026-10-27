@@ -21,16 +21,16 @@ Shared and course-level disclosures live here. Per-assignment disclosures are ke
 - Sources: CO3133 handbook
 
 **Entry 2 — Landing page roles and deliverables**
-- Tool: opencode CLI (GLM-5.3)
+- Tool/model: opencode CLI (GLM-5.3)
 - Used by: Nguyen Van An
 - Stage: Course project landing page (25 Oct 2026)
-- Purpose: Replace placeholder member roles and add links to current deliverables.
-- Prompt summary: Requested a final landing-page polish with contribution-based
-  roles and current assignment links, without changing the page structure.
-- AI contribution: updated the member role labels and the current-deliverables
-  list in index.html; no structural redesign.
-- Student verification: Nguyen Van An to review the rendered roles and links
+- Purpose: Update member roles and current deliverable links.
+- Affected files/sections: index.html.
+- Prompt summary: Requested a minimal landing-page update without structural
+  changes.
+- AI assistance: helped with the role labels and current-deliverables links.
+- Student verification: Nguyen Van An will review the rendered page and links
   before submission.
-- Affected files: index.html.
+- Verification scope: landing page text.
 - Responsible member: Nguyen Van An
-- Sources: CO3133 handbook §2.1; group contribution records.
+- Sources: handbook §2.1; group contribution records.

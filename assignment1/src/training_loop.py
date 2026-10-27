@@ -3,8 +3,10 @@ import sys
 import time
 from pathlib import Path
 
-Root = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(Root))
+SRC_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SRC_DIR.parent.parent
+sys.path.insert(0, str(SRC_DIR))
+sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np
 import torch

@@ -3,172 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CO3133 - Deep Learning - Project Hub</title>
+    <title>CO3133 — Group G-03 — Course Project Hub</title>
     <style>
+        :root {
+            --blue: #012169;
+            --blue-light: #0b3d91;
+            --text: #1d1d1f;
+            --muted: #57606a;
+            --line: #d8dee4;
+            --bg: #f6f8fa;
+            --card: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
+            margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            max-width: 960px;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        a { color: #0366d6; }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--blue);
+            color: white;
+        }
+
+        .site-header .inner {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
-            color: #1d1d1f;
-            background: #fafafa;
-        }
-        h1, h2, h3 {
-            border-bottom: 1px solid #e1e4e8;
-            padding-bottom: 0.3rem;
-        }
-        .header-university {
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 1.8rem;
-            background: #012169;
-            color: white;
-            padding: 1.5rem 1rem;
-            border-radius: 8px;
-        }
-        .section {
-            background: white;
-            padding: 1.5rem 2rem;
-            margin: 1.8rem 0;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .member-list {
-            list-style: none;
-            padding: 0;
-        }
-        .member-list li {
-            padding: 0.4rem 0;
-            border-bottom: 1px dashed #eaecef;
-        }
-        .badge {
-            display: inline-block;
-            background: #0366d6;
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        .assignment-links {
+            padding: 0.8rem 1.5rem;
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
             flex-wrap: wrap;
-            justify-content: center;
-            margin: 1rem 0;
         }
-        .assignment-links a {
-            background: #f0f2f5;
-            padding: 0.6rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            color: #0366d6;
-            border: 1px solid #d0d7de;
-            transition: 0.2s;
+
+        .brand {
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
-        .assignment-links a:hover {
-            background: #0366d6;
+
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
             color: white;
-            border-color: #0366d6;
+            text-decoration: none;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 600;
         }
+
+        .nav a:hover { background: rgba(255, 255, 255, 0.16); }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        .hero {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .hero h1 {
+            margin: 0 0 0.5rem;
+            font-size: 2rem;
+        }
+
+        .hero .subtitle {
+            color: var(--muted);
+            margin: 0 0 1.2rem;
+        }
+
+        .hero .meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .meta-item {
+            background: #f6f8fa;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-item strong { display: block; color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+        .actions { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+        .btn {
+            display: inline-block;
+            padding: 0.55rem 1.1rem;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: #f6f8fa;
+            color: #0366d6;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .btn:hover { background: #0366d6; color: white; border-color: #0366d6; }
+
+        .btn.primary { background: var(--blue); color: white; border-color: var(--blue); }
+        .btn.primary:hover { background: var(--blue-light); border-color: var(--blue-light); }
+
+        section { margin-top: 2.2rem; }
+
+        h2 {
+            font-size: 1.35rem;
+            margin: 0 0 1rem;
+        }
+
+        .section-note { color: var(--muted); margin: -0.5rem 0 1rem; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .member-card h3, .assignment-card h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+
+        .member-card p { margin: 0.2rem 0; color: var(--muted); font-size: 0.95rem; }
+        .member-card a { font-size: 0.95rem; }
+
+        .assignment-card .weight {
+            display: inline-block;
+            background: #eaf2ff;
+            color: var(--blue);
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .assignment-card p { color: var(--muted); margin: 0.4rem 0 0.9rem; font-size: 0.95rem; }
+        .assignment-card .actions { margin-top: 0; }
+
+        .status {
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+        }
+
+        .status.complete { background: #e6f4ea; color: #116329; }
+        .status.draft { background: #fff8e5; color: #9a6700; }
+        .status.pending { background: #f6f8fa; color: var(--muted); }
+
+        .ai-card { display: flex; flex-direction: column; gap: 0.4rem; }
+        .ai-card h3 { margin: 0; font-size: 1rem; }
+        .ai-card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
         .footer {
+            border-top: 1px solid var(--line);
+            color: var(--muted);
             text-align: center;
-            color: #6a737d;
-            font-size: 0.9rem;
-            margin-top: 2rem;
-            border-top: 1px solid #e1e4e8;
-            padding-top: 1.5rem;
+            padding: 1.5rem;
+            font-size: 0.92rem;
         }
-        code {
-            background: #f0f2f5;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        .disclosure-box {
-            background: #fdf6ec;
-            border-left: 5px solid #d18600;
-            padding: 1rem 1.5rem;
+
+        @media (max-width: 700px) {
+            .site-header .inner { justify-content: center; }
+            .hero h1 { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-university">
-        Ho Chi Minh City University of Technology - VNU-HCM<br>
-        <span style="font-weight: 300; font-size: 1rem;">Faculty of Computer Science and Engineering</span>
+<header class="site-header">
+    <div class="inner">
+        <div class="brand">CO3133 · Group G-03</div>
+        <nav class="nav">
+            <a href="#top">Home</a>
+            <a href="assignment1/index.html">Assignment 1</a>
+            <a href="assignment2/index.html">Assignment 2</a>
+            <a href="assignment3/index.html">Assignment 3</a>
+            <a href="AI_USAGE.md">AI Disclosure</a>
+        </nav>
     </div>
+</header>
 
-    <div class="section">
-        <h2> 1. Course Information</h2>
-        <ul style="list-style: none; padding-left: 0;">
-            <li><strong>Course name:</strong> Deep Learning and Its Applications</li>
-            <li><strong>Course code:</strong> CO3133</li>
-            <li><strong>Semester:</strong> 261</li>
-            <li><strong>Instructor:</strong> Le Thanh Sach</li>
-        </ul>
-    </div>
+<main id="top">
 
-    <div class="section">
-        <h2> 2. Group Information</h2>
-        <p><strong>Group :</strong> <span style="background: #eef; padding: 0.2rem 1rem;"> G-03 </span></p>
-        
-        <h3>Members</h3>
-        <ul class="member-list">
-            <li>
-                <strong>Full name:</strong> Nguyen Van An &nbsp;|&nbsp; 
-                <strong>Student ID:</strong> 2352013 &nbsp;|&nbsp; 
-                <strong>Role:</strong> Data pipeline, models, experiments &nbsp;|&nbsp;
-                <strong>GitHub:</strong> <a href="https://github.com/BanAnA9205" target="_blank">BanAnA9205</a>
-            </li>
-            <li>
-                <strong>Full name:</strong> Vo Le Hai Dang &nbsp;|&nbsp; 
-                <strong>Student ID:</strong> 2352257 &nbsp;|&nbsp; 
-                <strong>Role:</strong> Landing page, repository coordination &nbsp;|&nbsp;
-                <strong>GitHub:</strong> <a href="https://github.com/DangXiMi" target="_blank">DangXiMi</a>
-            </li>
-            <li>
-                <strong>Full name:</strong> Huynh Vuong Khang &nbsp;|&nbsp; 
-                <strong>Student ID:</strong> 2350011 &nbsp;|&nbsp; 
-                <strong>Role:</strong> EDA and visualization &nbsp;|&nbsp;
-                <strong>GitHub:</strong> <a href="https://github.com/hvhvk" target="_blank">hvhvk</a>
-            </li>
-        </ul>
-        <p style="margin-top: 1rem;">
-            <strong>Link to group's code repository:</strong> 
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning" target="_blank">https://github.com/DangXiMi/CO3133-DeepLearning</a>
+    <section class="hero">
+        <h1>Deep Learning and Its Applications</h1>
+        <p class="subtitle">Course project hub for Group G-03</p>
+
+        <div class="meta">
+            <div class="meta-item"><strong>Course code</strong>CO3133</div>
+            <div class="meta-item"><strong>Semester</strong>261</div>
+            <div class="meta-item"><strong>Instructor</strong>Le Thanh Sach</div>
+            <div class="meta-item"><strong>Group</strong>G-03</div>
+        </div>
+
+        <div class="actions">
+            <a class="btn primary" href="https://github.com/DangXiMi/CO3133-DeepLearning" target="_blank">Code Repository</a>
+            <a class="btn" href="assignment1/index.html">Assignment 1</a>
+            <a class="btn" href="assignment2/index.html">Assignment 2</a>
+            <a class="btn" href="assignment3/index.html">Assignment 3</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Group Members</h2>
+        <p class="section-note">Core responsibilities across the three course projects.</p>
+        <div class="grid">
+            <article class="card member-card">
+                <h3>Nguyen Van An</h3>
+                <p>Student ID: 2352013</p>
+                <p>Role: Data pipeline, models, experiments</p>
+                <a href="https://github.com/BanAnA9205" target="_blank">GitHub Profile</a>
+            </article>
+
+            <article class="card member-card">
+                <h3>Vo Le Hai Dang</h3>
+                <p>Student ID: 2352257</p>
+                <p>Role: Landing page, repository coordination</p>
+                <a href="https://github.com/DangXiMi" target="_blank">GitHub Profile</a>
+            </article>
+
+            <article class="card member-card">
+                <h3>Huynh Vuong Khang</h3>
+                <p>Student ID: 2350011</p>
+                <p>Role: EDA and visualization</p>
+                <a href="https://github.com/hvhvk" target="_blank">GitHub Profile</a>
+            </article>
+        </div>
+    </section>
+
+    <section>
+        <h2>Course Project Index</h2>
+        <p class="section-note">Three assignments, one shared repository and website.</p>
+        <div class="grid">
+
+            <article class="card assignment-card">
+                <span class="weight">40%</span>
+                <h3>Assignment 1</h3>
+                <span class="status complete">M2 Final complete</span>
+                <p>
+                    Foundations of Deep Learning Pipelines and Architectures.
+                    A controlled five-model comparison on Fashion-MNIST:
+                    Linear, MLP, CNN, GRU, and Transformer.
+                </p>
+                <div class="actions">
+                    <a class="btn" href="assignment1/index.html">View Page</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/report.pdf" target="_blank">Report</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/slides.pdf" target="_blank">Slides</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/video.html" target="_blank">Video</a>
+                </div>
+            </article>
+
+            <article class="card assignment-card">
+                <span class="weight">30%</span>
+                <h3>Assignment 2</h3>
+                <span class="status draft">M2 Draft complete</span>
+                <p>
+                    Deep Learning on Large-Scale Data and Specialized Tasks.
+                    Food-101 image classification with a from-scratch CNN baseline
+                    and a fine-tuned ImageNet ResNet-18.
+                </p>
+                <div class="actions">
+                    <a class="btn" href="assignment2/index.html">View Page</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/PROPOSAL.md" target="_blank">Dataset Proposal</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/report.pdf" target="_blank">Report</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/slides.pdf" target="_blank">Slides</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/video.html" target="_blank">Video</a>
+                </div>
+            </article>
+
+            <article class="card assignment-card">
+                <span class="weight">30%</span>
+                <h3>Assignment 3</h3>
+                <span class="status pending">Not started</span>
+                <p>
+                    Multimodal Deep Learning: representation, fusion, and evaluation.
+                    Dataset proposal due 18 November 2026.
+                </p>
+                <div class="actions">
+                    <a class="btn" href="assignment3/index.html">View Page</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment3/materials/report.pdf" target="_blank">Report</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment3/materials/slides.pdf" target="_blank">Slides</a>
+                    <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment3/materials/video.html" target="_blank">Video</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>AI Usage Disclosure</h2>
+        <p class="section-note">
+            AI tools were used as assistants under direct member supervision.
+            Detailed logs are maintained for every assignment.
         </p>
-    </div>
+        <div class="grid">
+            <article class="card ai-card">
+                <h3>Assignment 1</h3>
+                <p>Data pipeline, model scaffolding, EDA, and experiment support.</p>
+                <a href="assignment1/AI_USAGE.md">View disclosure</a>
+            </article>
 
-    <div class="section">
-        <h2> 3. Assignment Index</h2>
-        <div class="assignment-links">
-            <a href="assignment1/index.html">📄 Assignment 1</a>
-            <a href="assignment2/index.html">📄 Assignment 2</a>
-            <a href="assignment3/index.html">📄 Assignment 3</a>
+            <article class="card ai-card">
+                <h3>Assignment 2</h3>
+                <p>Dataset proposal and M2 pipeline support.</p>
+                <a href="assignment2/AI_USAGE.md">View disclosure</a>
+            </article>
+
+            <article class="card ai-card">
+                <h3>Assignment 3</h3>
+                <p>Not started. Disclosure will be added when work begins.</p>
+                <span class="status pending">Pending</span>
+            </article>
         </div>
-        <p style="margin-top: 1rem;"><strong>Current deliverables:</strong></p>
-        <ul>
-            <li><a href="assignment1/index.html">Assignment 1 — M2 final page (results, checkpoints, analysis)</a></li>
-            <li><a href="assignment1/results/results.csv">Assignment 1 — Results CSV</a></li>
-            <li><a href="assignment1/AI_USAGE.md" target="_blank">Assignment 1 — AI Usage Disclosure</a></li>
-            <li><a href="assignment2/PROPOSAL.md" target="_blank">Assignment 2 — Dataset Proposal (Food-101, image classification)</a> — Accepted</li>
-            <li><a href="assignment2/index.html">Assignment 2 — M2 Draft page (preliminary results, code, checkpoints)</a></li>
-            <li><a href="assignment2/results/results.json">Assignment 2 — Preliminary Results JSON</a></li>
-            <li><a href="assignment2/AI_USAGE.md" target="_blank">Assignment 2 — AI Usage Disclosure</a></li>
-        </ul>
-    </div>
+    </section>
 
-    <div class="section">
-        <h2> 4. AI Usage Disclosure</h2>
-        <div class="disclosure-box">
-            <p>See <a href="AI_USAGE.md" target="_blank">AI_USAGE.md</a> for the AI usage disclosure.</p>
-        </div>
-    </div>
+</main>
 
+<footer class="footer">
+    CO3133 · Deep Learning and Its Applications · Semester 261 · Group G-03
+</footer>
 
 </body>
 </html>

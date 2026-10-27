@@ -47,9 +47,9 @@ Assignment-specific commands are documented in each assignment’s README.
 ## Repository layout
 
 ```text
-assignment1/   Assignment 1 code, results, checkpoints, README
-assignment2/   Assignment 2 code, results, checkpoints, README
-assignment3/   Assignment 3 page (work in progress)
+assignment1/   Assignment 1 code, results, checkpoints, materials, README
+assignment2/   Assignment 2 code, results, checkpoints, materials, README
+assignment3/   Assignment 3 page and materials (work in progress)
 utils/         shared data loading and experiment helpers
 data/          downloaded datasets (not committed)
 ```

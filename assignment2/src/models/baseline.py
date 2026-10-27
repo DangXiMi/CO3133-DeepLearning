@@ -5,7 +5,7 @@ This is the Assignment 1 CNN, retrained from scratch on Food-101 at 128px with
 is compared against.
 """
 
-from assignment1.models.cnn import CNNClassifier
+from assignment1.src.models.cnn import CNNClassifier
 
 
 def build_baseline_cnn(num_classes=101, image_size=128,
