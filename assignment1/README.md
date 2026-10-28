@@ -104,7 +104,7 @@ utils/
 - [Assignment 1 page](index.html)
 - [Report](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/report.pdf)
 - [Slides](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/slides.pdf)
-- [Video](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/video.html)
+- [Video](https://www.youtube.com/watch?v=TODO_A1_VIDEO) <!-- TODO: replace with the real YouTube URL -->
 - [Results JSON](results/results.json)
 - [Results CSV](results/results.csv)
 - [Run configuration](results/config.json)
