@@ -1,7 +1,7 @@
 """Simple baseline for Assignment 2.
 
 This is the Assignment 1 CNN, retrained from scratch on Food-101 at 128px with
-101 classes.  It is the self-implemented baseline that the pretrained ResNet-18
+101 classes.  It is the self-implemented baseline that the pretrained ResNet-50
 is compared against.
 """
 

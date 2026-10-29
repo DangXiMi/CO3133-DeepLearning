@@ -25,3 +25,15 @@
 - Affected files: assignment2/main.ipynb; assignment2/training_loop.py; assignment2/models/baseline.py; assignment2/models/resnet.py; utils/dataloader.py
 - Responsible member: Nguyen Van An
 - Sources: Assignment 1 code in this repository; torchvision ResNet documentation; CO3133 handbook §20
+
+**Entry 3 — M3 Final: multi-seed experiment, freeze-vs-full ablation, and reused A1 utilities**
+- Tool: opencode CLI (GLM-5.3)
+- Used by: Nguyen Van An
+- Stage: A2 M3 development — final experiment scaffold (28 Oct 2026)
+- Purpose: Extend the existing A2 notebook to the remaining M3 requirements: three training seeds, a frozen-vs-full fine-tuning ablation, qualitative examples, error analysis, and compute-cost analysis.
+- Prompt summary: "let's finish the remaining requirements too. let's choose seeds 42, 67 and 69 and reuse assignment 1's curves/errors utils. also a freeze-vs-full ablation too"
+- AI contribution: extended the A2 notebook to loop over seeds 42/67/69 and the three model configurations, reused Assignment 1’s `utils/experiment_utils.py` for curves, example predictions, and inference timing, and added per-class metrics, top-confusion extraction, and the frozen-vs-full ablation summary; no new architecture was introduced.
+- Student verification: the user reviewed the notebook structure, ran a 303-image / 1-epoch smoke test of all three model configurations end-to-end, and later executed the full 30-epoch, 3-seed run; the reported accuracy, macro-F1, training time, and inference time were checked against `results/summary.csv` and `results/results.json`.
+- Affected files: assignment2/notebooks/main.ipynb; assignment2/src/training_loop.py; assignment2/src/models/resnet.py; assignment2/src/models/baseline.py; assignment2/README.md; assignment2/index.html
+- Responsible member: Nguyen Van An
+- Sources: Assignment 1 code and `utils/experiment_utils.py`; CO3133 handbook §20–§23; torchvision ResNet-50 documentation

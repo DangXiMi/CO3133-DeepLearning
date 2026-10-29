@@ -1,0 +1,102 @@
+[
+  {
+    "true": "samosa",
+    "predicted": "spring_rolls",
+    "count": 38
+  },
+  {
+    "true": "pad_thai",
+    "predicted": "fried_rice",
+    "count": 36
+  },
+  {
+    "true": "chocolate_cake",
+    "predicted": "chocolate_mousse",
+    "count": 34
+  },
+  {
+    "true": "steak",
+    "predicted": "filet_mignon",
+    "count": 34
+  },
+  {
+    "true": "steak",
+    "predicted": "baby_back_ribs",
+    "count": 33
+  },
+  {
+    "true": "spaghetti_carbonara",
+    "predicted": "fried_rice",
+    "count": 32
+  },
+  {
+    "true": "filet_mignon",
+    "predicted": "steak",
+    "count": 28
+  },
+  {
+    "true": "greek_salad",
+    "predicted": "caprese_salad",
+    "count": 27
+  },
+  {
+    "true": "bruschetta",
+    "predicted": "caprese_salad",
+    "count": 26
+  },
+  {
+    "true": "chocolate_mousse",
+    "predicted": "chocolate_cake",
+    "count": 26
+  },
+  {
+    "true": "panna_cotta",
+    "predicted": "cheesecake",
+    "count": 26
+  },
+  {
+    "true": "beet_salad",
+    "predicted": "greek_salad",
+    "count": 24
+  },
+  {
+    "true": "french_fries",
+    "predicted": "onion_rings",
+    "count": 24
+  },
+  {
+    "true": "peking_duck",
+    "predicted": "baby_back_ribs",
+    "count": 24
+  },
+  {
+    "true": "beef_carpaccio",
+    "predicted": "caprese_salad",
+    "count": 23
+  },
+  {
+    "true": "hamburger",
+    "predicted": "pulled_pork_sandwich",
+    "count": 23
+  },
+  {
+    "true": "lobster_bisque",
+    "predicted": "clam_chowder",
+    "count": 23
+  },
+  {
+    "true": "paella",
+    "predicted": "bibimbap",
+    "count": 23
+  },
+  {
+    "true": "beef_tartare",
+    "predicted": "tuna_tartare",
+    "count": 22
+  },
+  {
+    "true": "lasagna",
+    "predicted": "french_onion_soup",
+    "count": 22
+  }
+]

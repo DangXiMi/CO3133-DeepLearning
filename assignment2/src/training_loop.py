@@ -68,9 +68,9 @@ def evaluate(model, loader, criterion, device, amp):
 
 
 def fit(model, loaders, device, epochs, lr=1e-3, weight_decay=1e-4,
-        amp=True, checkpoint_path=None, frozen_backbone=False):
+        amp=True, checkpoint_path=None, frozen_backbone=False, seed=42):
     """Train and select the best checkpoint by validation macro-F1."""
-    set_seed()
+    set_seed(seed)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(
         (p for p in model.parameters() if p.requires_grad),
@@ -81,7 +81,7 @@ def fit(model, loaders, device, epochs, lr=1e-3, weight_decay=1e-4,
 
     history = {
         "train_loss": [], "train_accuracy": [],
-        "val_loss": [], "val_accuracy": [], "val_macro_f1": [],
+        "validation_loss": [], "validation_accuracy": [], "validation_macro_f1": [],
         "epoch_time": [],
     }
     best_f1 = -1.0
@@ -99,9 +99,9 @@ def fit(model, loaders, device, epochs, lr=1e-3, weight_decay=1e-4,
 
         history["train_loss"].append(train["loss"])
         history["train_accuracy"].append(train["accuracy"])
-        history["val_loss"].append(val["loss"])
-        history["val_accuracy"].append(val["accuracy"])
-        history["val_macro_f1"].append(val["macro_f1"])
+        history["validation_loss"].append(val["loss"])
+        history["validation_accuracy"].append(val["accuracy"])
+        history["validation_macro_f1"].append(val["macro_f1"])
         history["epoch_time"].append(epoch_time)
 
         if val["macro_f1"] > best_f1:
@@ -120,4 +120,6 @@ def fit(model, loaders, device, epochs, lr=1e-3, weight_decay=1e-4,
 
     train_time = time.perf_counter() - started
     model.load_state_dict(best_state)
+    history["best_epoch"] = best_epoch
+    history["monitor"] = "validation_macro_f1"
     return history, best_epoch, train_time

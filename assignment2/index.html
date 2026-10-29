@@ -93,17 +93,29 @@
     </div>
 
     <div class="section">
-        <h3> Progress (updated 27 Oct 2026)</h3>
+        <h3> Progress (updated 29 Oct 2026)</h3>
         <p><strong>Milestones:</strong> M1 Dataset Proposal — Accepted.
-            M2 Draft — complete: simple baseline + pretrained model trained, EDA, preliminary metrics.</p>
+            M2 Draft — complete. M3 experiments — complete: multi-seed runs, freeze-vs-full ablation,
+            qualitative results, error analysis, and compute-cost analysis. Report, slides, and video are pending.</p>
         <ul>
             <li><strong>Task track:</strong> Image classification</li>
             <li><strong>Dataset:</strong> Food-101 — 101 classes, 101,000 real-food photographs
                 (75,750 train / 25,250 test), fine-grained multi-class classification</li>
-            <li><strong>Plan:</strong> from-scratch CNN baseline vs. fine-tuned ResNet-18 (ImageNet weights),
-                with a frozen-vs-full fine-tuning ablation and compute-cost analysis</li>
+            <li><strong>Models:</strong>
+                <ul>
+                    <li>Simple baseline: Assignment 1 CNN, retrained from scratch at 128×128.</li>
+                    <li>Pretrained model: ImageNet ResNet-50, full fine-tuning at 224×224.</li>
+                    <li>Controlled ablation: ImageNet ResNet-50 with a frozen backbone.</li>
+                </ul>
+            </li>
+            <li><strong>Seeds:</strong> 42, 67, and 69 for training; the train/validation split is fixed at seed 42.</li>
+            <li><strong>Model selection:</strong> best validation macro-F1; the official test set is never used for model selection.</li>
+            <li><strong>Epochs:</strong> 30.</li>
+            <li><strong>Controlled experiment:</strong> frozen backbone vs full fine-tuning.</li>
+            <li><strong>Reuse:</strong> Assignment 1’s `utils/experiment_utils.py` is reused for curves, example predictions, and inference timing.</li>
+            <li><strong>Analysis:</strong> per-class precision/recall/F1, top confusions, correct and incorrect examples, and compute cost are recorded for every run.</li>
         </ul>
-        <p><strong>Preliminary results (M2, 10 epochs, seed 42):</strong></p>
+        <p><strong>Results (30 epochs, 3 seeds, mean ± std):</strong></p>
         <table>
             <thead>
                 <tr><th>Model</th><th>Role</th><th>Image size</th><th>Params</th><th>Test accuracy</th><th>Test macro-F1</th></tr>
@@ -114,23 +126,32 @@
                     <td>Simple baseline (from scratch)</td>
                     <td>128×128</td>
                     <td>8,829,349</td>
-                    <td>33.05%</td>
-                    <td>32.28%</td>
+                    <td>40.18% ± 2.38</td>
+                    <td>39.74% ± 2.48</td>
                 </tr>
                 <tr>
-                    <td>ResNet-18</td>
-                    <td>Pretrained model (ImageNet, fine-tuned)</td>
+                    <td>ResNet-50 (full fine-tune)</td>
+                    <td>Pretrained model</td>
                     <td>224×224</td>
-                    <td>11,228,325</td>
-                    <td>72.25%</td>
-                    <td>71.95%</td>
+                    <td>23,714,981</td>
+                    <td><strong>84.20% ± 0.10</strong></td>
+                    <td><strong>84.19% ± 0.15</strong></td>
+                </tr>
+                <tr>
+                    <td>ResNet-50 (frozen backbone)</td>
+                    <td>Controlled ablation</td>
+                    <td>224×224</td>
+                    <td>23,714,981</td>
+                    <td>69.29% ± 0.06</td>
+                    <td>68.96% ± 0.08</td>
                 </tr>
             </tbody>
         </table>
         <p><strong>Links:</strong>
             <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/PROPOSAL.md" target="_blank">Dataset Proposal</a> &nbsp;|&nbsp;
             <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/notebooks/main.ipynb" target="_blank">Notebook (main.ipynb)</a> &nbsp;|&nbsp;
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/results.json" target="_blank">Results JSON</a> &nbsp;|&nbsp;
+            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/results.csv" target="_blank">Results CSV</a> &nbsp;|&nbsp;
+            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/summary.csv" target="_blank">Summary CSV</a> &nbsp;|&nbsp;
             <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/AI_USAGE.md" target="_blank">AI Usage Disclosure</a>
         </p>
     </div>

@@ -1,0 +1,102 @@
+[
+  {
+    "true": "filet_mignon",
+    "predicted": "steak",
+    "count": 48
+  },
+  {
+    "true": "steak",
+    "predicted": "filet_mignon",
+    "count": 32
+  },
+  {
+    "true": "chocolate_cake",
+    "predicted": "chocolate_mousse",
+    "count": 31
+  },
+  {
+    "true": "prime_rib",
+    "predicted": "steak",
+    "count": 26
+  },
+  {
+    "true": "falafel",
+    "predicted": "crab_cakes",
+    "count": 23
+  },
+  {
+    "true": "tuna_tartare",
+    "predicted": "beef_tartare",
+    "count": 22
+  },
+  {
+    "true": "apple_pie",
+    "predicted": "bread_pudding",
+    "count": 21
+  },
+  {
+    "true": "garlic_bread",
+    "predicted": "grilled_cheese_sandwich",
+    "count": 21
+  },
+  {
+    "true": "onion_rings",
+    "predicted": "fried_calamari",
+    "count": 21
+  },
+  {
+    "true": "pork_chop",
+    "predicted": "steak",
+    "count": 19
+  },
+  {
+    "true": "shrimp_and_grits",
+    "predicted": "ravioli",
+    "count": 19
+  },
+  {
+    "true": "beef_tartare",
+    "predicted": "tuna_tartare",
+    "count": 18
+  },
+  {
+    "true": "club_sandwich",
+    "predicted": "grilled_cheese_sandwich",
+    "count": 18
+  },
+  {
+    "true": "gnocchi",
+    "predicted": "ravioli",
+    "count": 17
+  },
+  {
+    "true": "pork_chop",
+    "predicted": "grilled_salmon",
+    "count": 17
+  },
+  {
+    "true": "pulled_pork_sandwich",
+    "predicted": "hamburger",
+    "count": 17
+  },
+  {
+    "true": "breakfast_burrito",
+    "predicted": "chicken_quesadilla",
+    "count": 16
+  },
+  {
+    "true": "steak",
+    "predicted": "prime_rib",
+    "count": 16
+  },
+  {
+    "true": "cheesecake",
+    "predicted": "strawberry_shortcake",
+    "count": 15
+  },
+  {
+    "true": "huevos_rancheros",
+    "predicted": "nachos",
+    "count": 15
+  }
+]
