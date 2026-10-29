@@ -103,7 +103,7 @@ utils/
 
 - [Assignment 1 page](index.html)
 - [Report](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/G-03_A1_Report.pdf)
-- [Slides](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/G-03_A1_Slides.pdf
+- [Slides](https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment1/materials/G-03_A1_Slides.pdf)
 - [Video](https://youtu.be/CUaypp5TCEA)
 - [Results JSON](results/results.json)
 - [Results CSV](results/results.csv)
