@@ -14,7 +14,31 @@
 - Responsible member: Nguyen Van An
 - Sources: CO3133 handbook §17–§19; Food-101 dataset card (huggingface.co/datasets/ethz/food101); official ETH Zürich page
 
-**Entry 2 — M2 Draft: reuse of Assignment 1 pipeline for Assignment 2 (assignment2/main.ipynb and supporting modules)**
+**Entry 2 — Exploratory Data Analysis: method research for detecting near-duplicate images (assignment2/notebooks/check_duplicate.ipynb)**
+- Tool: Gemini
+- Used by: Huynh Vuong Khang
+- Stage: A2 M2 draft — EDA (25 Oct 2026)
+- Purpose: Researching near-duplicate image detection methods during EDA.
+- Prompt summary: "List some lightweight methods to detect near-duplicate images" and "Explain how pHash works"
+- AI contribution: Suggested pHash for detecting near-duplicate images and explain its mechanism.
+- Student verification: cross-checked the method against [the Wikipedia article on perceptual hashing](https://en.wikipedia.org/wiki/Perceptual_hashing) and manually inspected image pairs.
+- Affected files: assignment2/notebooks/check_duplicate.ipynb and eda.ipynb
+- Responsible member: Huynh Vuong Khang
+- Sources: [The Wikipedia article on perceptual hashing](https://en.wikipedia.org/wiki/Perceptual_hashing)
+
+**Entry 3 — Exploratory Data Analysis: implementation debugging near-duplicate detection (assignment2/notebooks/check_duplicate.ipynb)**
+- Tool: ChatGPT (GPT-6 Sol)
+- Used by: Huynh Vuong Khang
+- Stage: A2 M2 draft — EDA (25 Oct 2026)
+- Purpose: Debugging near-duplicate detection across training and test splits.
+- Prompt summary: "Fix the current code to classify duplicate pairs as train-train or train-test with correct indices."
+- AI contribution: Suggested fixes for mapping indices to the corresponding images in the training and test splits.
+- Student verification: manually plotted and inspected matched image pairs to verify correct index mapping and image retrieval.
+- Affected files: assignment2/notebooks/check_duplicate.ipynb and eda.ipynb
+- Responsible member: Huynh Vuong Khang
+- Sources: None
+
+**Entry 4 — M2 Draft: reuse of Assignment 1 pipeline for Assignment 2 (assignment2/main.ipynb and supporting modules)**
 - Tool: opencode CLI (GLM-5.3)
 - Used by: Nguyen Van An
 - Stage: A2 M2 development — draft pipeline and preliminary training (26–27 Oct 2026)
@@ -26,7 +50,7 @@
 - Responsible member: Nguyen Van An
 - Sources: Assignment 1 code in this repository; torchvision ResNet documentation; CO3133 handbook §20
 
-**Entry 3 — M3 Final experiments: multi-seed runs and freeze-vs-full ablation**
+**Entry 5 — M3 Final experiments: multi-seed runs and freeze-vs-full ablation**
 - Tool: opencode CLI (GLM-5.3)
 - Used by: Nguyen Van An
 - Stage: A2 M3 final experiments (28 Oct 2026)
