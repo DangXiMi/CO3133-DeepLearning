@@ -436,7 +436,7 @@
                 </li>
                 <li>
                     <strong>Preprocessing:</strong> ImageNet normalization;
-                    RandomResizedCrop (scale 0.7–1.0) and RandomHorizontalFlip
+                    RandomResizedCrop (scale 0.7-1.0) and RandomHorizontalFlip
                     during training; resize followed by center crop during
                     validation and testing.
                 </li>
@@ -600,7 +600,7 @@
             <figure><img src="results/curves/resnet50_full_seed67.png" alt="Full ResNet-50 seed 67 curves"><figcaption>Full ResNet-50 (seed 67)</figcaption></figure>
         </div>
 
-        <h3>Confusion matrices</h3>
+        <h3>Confusion counts</h3>
         <div class="grid confusion">
             <figure><img src="results/confusion/baseline_seed42_top_confusions.png" alt="Baseline confusion summary"><figcaption>Baseline top confusions</figcaption></figure>
             <figure><img src="results/confusion/resnet50_frozen_seed42_top_confusions.png" alt="Frozen ResNet-50 confusion summary"><figcaption>Frozen ResNet-50 top confusions</figcaption></figure>
@@ -615,21 +615,32 @@
         </div>
     </section>
 
+    
     <section id="analysis">
         <h2>6. Comparison and Discussion</h2>
         <div class="card">
             <p>
-                The full fine-tuning model is by far the strongest approach: it reaches about 84.2% test accuracy and
-                84.19% macro-F1, while the frozen backbone stays at 69.29%/68.96%. The baseline CNN underperforms both
-                transfer-learning setups, showing that the Food-101 task benefits substantially from pretrained visual
-                features and well-adapted representations.
+                Full fine-tuning achieves the highest test accuracy (84.20%) and
+                macro-F1 (84.19%), outperforming the frozen backbone by
+                <strong>14.91 and 15.23 percentage points</strong>, respectively.
+                The baseline CNN achieves only 40.18% accuracy. However, its
+                comparison with ResNet-50 is not controlled, since pretraining,
+                input resolution, learning rate, and parameter count all differ.
             </p>
             <p>
-                The gap between the frozen and full models indicates that task-specific adaptation matters. The frozen
-                backbone still captures useful generic visual cues, but the final classification performance is limited by
-                its fixed representation. By contrast, full fine-tuning updates the encoder to match fine-grained Food-101
-                distinctions, which is especially important for visually similar dishes and classes with subtle appearance
-                differences.
+                The results support the benefit of backbone adaptation within the
+                fixed 30-epoch budget, but the frozen model was still improving
+                at epoch 30, while full fine-tuning peaked at epochs 4-9 and
+                subsequently overfit. Therefore, the performance gap cannot be
+                attributed solely to representation adaptation. Full fine-tuning
+                also requires <strong>35.6% more training time</strong> than the
+                frozen variant.
+            </p>
+            <p>
+                Error analysis reveals persistent confusion between visually similar
+                dishes, particularly steak, filet_mignon, and prime_rib.
+                Full fine-tuning reduces these errors but does not eliminate them,
+                indicating the difficulty of fine-grained food classification.
             </p>
         </div>
     </section>
@@ -638,17 +649,28 @@
         <h2>7. Limitations and Conclusion</h2>
         <div class="card">
             <p>
-                The comparison is limited to one dataset, three seeds, and one training budget. The conclusions are therefore
-                most directly tied to this Food-101 protocol, not to all large-scale classification tasks. Nevertheless, the
-                results are consistent across seeds and show a clear ordering: baseline < frozen backbone < full fine-tuning.
+                The study is limited to Food-101, one pretrained backbone,
+                three training seeds, and a fixed 30-epoch budget. No
+                hyperparameter search, learning-rate scheduler, or early stopping
+                was used. The training split retains documented label noise and
+                potential near-duplicate leakage affecting at most 0.40% of
+                test images. The frozen model had not converged, while full
+                fine-tuning exhibited overfitting.
             </p>
             <p>
-                Under this protocol, the pretrained ResNet-50 with full fine-tuning is the clear winner. It delivers the best
-                accuracy and macro-F1 while preserving strong inference speed. The frozen variant remains a useful controlled
-                ablation, and the baseline provides a simple reference point for understanding the benefit of transfer learning.
+                Under the evaluated protocol, performance consistently follows
+                <strong>baseline CNN &lt; frozen ResNet-50 &lt; fully fine-tuned
+                ResNet-50</strong>. Full fine-tuning achieves
+                <strong>84.20% ± 0.10 test accuracy</strong> and
+                <strong>84.19% ± 0.15 macro-F1</strong>, demonstrating its
+                effectiveness for Food-101 within the given compute budget.
+                Future work includes training the frozen model to convergence,
+                investigating regularization and learning-rate schedules, and
+                evaluating higher resolutions and alternative backbones.
             </p>
         </div>
     </section>
+
 
     <section id="reproducibility">
         <h2>8. Reproducibility and Deliverables</h2>
