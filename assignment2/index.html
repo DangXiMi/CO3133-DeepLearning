@@ -3,158 +3,732 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment 2 - CO3133 Group: G-03</title>
+    <title>Assignment 2 — Group G-03</title>
     <style>
+        :root {
+            --blue: #012169;
+            --blue-light: #0b3d91;
+            --text: #1d1d1f;
+            --muted: #57606a;
+            --line: #d8dee4;
+            --bg: #f6f8fa;
+            --card: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
+            margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            max-width: 960px;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        a { color: #0366d6; }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--blue);
+            color: white;
+        }
+
+        .site-header .inner {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
-            color: #1d1d1f;
-            background: #fafafa;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-        h1, h2, h3 {
-            border-bottom: 1px solid #e1e4e8;
-            padding-bottom: 0.3rem;
-        }
-        .header-university {
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 1.8rem;
-            background: #012169;
+
+        .brand { font-weight: 700; letter-spacing: 0.02em; }
+
+        .nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        .nav a {
             color: white;
-            padding: 1.5rem 1rem;
-            border-radius: 8px;
-        }
-        .section {
-            background: white;
-            padding: 1.5rem 2rem;
-            margin: 1.8rem 0;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .badge-construction {
-            display: inline-block;
-            background: #d18600;
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-        .footer {
-            text-align: center;
-            color: #6a737d;
-            font-size: 0.9rem;
-            margin-top: 2rem;
-            border-top: 1px solid #e1e4e8;
-            padding-top: 1.5rem;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            background: #f0f2f5;
-            padding: 0.4rem 1.5rem;
-            border-radius: 20px;
             text-decoration: none;
-            color: #0366d6;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.92rem;
             font-weight: 600;
         }
-        .back-link:hover {
-            background: #0366d6;
+
+        .nav a:hover { background: rgba(255,255,255,0.16); }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        .hero {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .hero h1 { margin: 0 0 0.5rem; font-size: 1.9rem; }
+        .hero .subtitle { color: var(--muted); margin: 0 0 1rem; }
+
+        .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: #f6f8fa;
+            color: #0366d6;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .btn:hover { background: #0366d6; color: white; border-color: #0366d6; }
+        .btn.primary { background: var(--blue); color: white; border-color: var(--blue); }
+        .btn.primary:hover { background: var(--blue-light); border-color: var(--blue-light); }
+
+        section { margin-top: 2rem; }
+
+        h2 { font-size: 1.35rem; margin: 0 0 0.8rem; }
+        h3 { font-size: 1.1rem; margin: 1.4rem 0 0.6rem; }
+
+        .section-note { color: var(--muted); margin: -0.4rem 0 1rem; }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 1.4rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--line);
+            padding: 0.45rem 0.6rem;
+            text-align: right;
+        }
+
+        th:first-child, td:first-child { text-align: left; }
+        th { background: #f0f2f5; }
+        tr:nth-child(even) td { background: #fafbfc; }
+
+        .methodology td:nth-child(2),
+        .methodology td:nth-child(3),
+        .methodology th:nth-child(2),
+        .methodology th:nth-child(3) { text-align: left; }
+
+        .best { font-weight: 700; background: #e6f4ea !important; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        figure {
+            margin: 0;
+            background: #fafbfc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 0.6rem;
+        }
+
+        figure img { width: 100%; height: auto; display: block; }
+
+        figcaption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+        }
+
+        pre {
+            background: #f6f8fa;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: #f0f2f5;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .note {
+            background: #fff8e5;
+            border-left: 4px solid #d18600;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+        }
+
+        figure img { cursor: zoom-in; }
+
+        .eda-stack {
+            display: grid;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .eda-portrait {
+            max-width: 340px;
+            margin: 1.2rem auto 0;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.88);
+            cursor: zoom-out;
+        }
+
+        .lightbox.open { display: flex; }
+
+        .lightbox img {
+            max-width: 96vw;
+            max-height: 92vh;
+            width: auto;
+            height: auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 1.2rem;
             color: white;
+            font-size: 2.4rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .footer {
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.92rem;
+        }
+
+        .status {
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+        }
+
+        .status.complete { background: #e6f4ea; color: #116329; }
+
+        @media (max-width: 700px) {
+            .site-header .inner { justify-content: center; }
+            .hero h1 { font-size: 1.55rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-university">
-        Ho Chi Minh City University of Technology - VNU-HCM<br>
-        <span style="font-weight: 300; font-size: 1rem;">Faculty of Computer Science and Engineering</span>
+<header class="site-header">
+    <div class="inner">
+        <div class="brand">CO3133 · Assignment 2</div>
+        <nav class="nav">
+            <a href="../index.html">Home</a>
+            <a href="#results">Results</a>
+            <a href="#analysis">Analysis</a>
+            <a href="#reproducibility">Reproducibility</a>
+            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/AI_USAGE.md" target="_blank">AI Disclosure</a>
+        </nav>
     </div>
+</header>
 
-    <a href="../index.html" class="back-link">⬅ Back to Landing Page</a>
+<main>
 
-    <div class="section">
-        <h1>📘 Assignment 2</h1>
-        
-        <p><strong>Assignment Title:</strong> Deep Learning on Large-Scale Data for Specialized Computer Vision or Language Tasks</p>
-        <p><strong>Course:</strong> CO3133 - Deep Learning and Its Applications (Semester 261)</p>
-        <p><strong>Instructor:</strong> Le Thanh Sach</p>
-        
-        <h3> Group Members</h3>
-        <ul>
-            <li>Nguyen Van An (2352013)</li>
-            <li>Vo Le Hai Dang (2352257)</li>
-            <li>Huynh Vuong Khang (2350011)</li>
-        </ul>
-    </div>
+    <section class="hero">
+        <h1>Deep Learning on Large-Scale Data and Specialized Tasks</h1>
+        <p class="subtitle">A from-scratch CNN baseline vs. a fine-tuned ImageNet ResNet-50</p>
 
-    <div class="section">
-        <h3> Progress (updated 29 Oct 2026)</h3>
-        <p><strong>Milestones:</strong> M1 Dataset Proposal — Accepted.
-            M2 Draft — complete. M3 experiments — complete: multi-seed runs, freeze-vs-full ablation,
-            qualitative results, error analysis, and compute-cost analysis. Report, slides, and video are pending.</p>
-        <ul>
-            <li><strong>Task track:</strong> Image classification</li>
-            <li><strong>Dataset:</strong> Food-101 — 101 classes, 101,000 real-food photographs
-                (75,750 train / 25,250 test), fine-grained multi-class classification</li>
-            <li><strong>Models:</strong>
-                <ul>
-                    <li>Simple baseline: Assignment 1 CNN, retrained from scratch at 128×128.</li>
-                    <li>Pretrained model: ImageNet ResNet-50, full fine-tuning at 224×224.</li>
-                    <li>Controlled ablation: ImageNet ResNet-50 with a frozen backbone.</li>
-                </ul>
-            </li>
-            <li><strong>Seeds:</strong> 42, 67, and 69 for training; the train/validation split is fixed at seed 42.</li>
-            <li><strong>Model selection:</strong> best validation macro-F1; the official test set is never used for model selection.</li>
-            <li><strong>Epochs:</strong> 30.</li>
-            <li><strong>Controlled experiment:</strong> frozen backbone vs full fine-tuning.</li>
-            <li><strong>Reuse:</strong> Assignment 1’s `utils/experiment_utils.py` is reused for curves, example predictions, and inference timing.</li>
-            <li><strong>Analysis:</strong> per-class precision/recall/F1, top confusions, correct and incorrect examples, and compute cost are recorded for every run.</li>
-        </ul>
-        <p><strong>Results (30 epochs, 3 seeds, mean ± std):</strong></p>
-        <table>
-            <thead>
-                <tr><th>Model</th><th>Role</th><th>Image size</th><th>Params</th><th>Test accuracy</th><th>Test macro-F1</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Assignment 1 CNN</td>
-                    <td>Simple baseline (from scratch)</td>
-                    <td>128×128</td>
-                    <td>8,829,349</td>
-                    <td>40.18% ± 2.38</td>
-                    <td>39.74% ± 2.48</td>
-                </tr>
-                <tr>
-                    <td>ResNet-50 (full fine-tune)</td>
-                    <td>Pretrained model</td>
-                    <td>224×224</td>
-                    <td>23,714,981</td>
-                    <td><strong>84.20% ± 0.10</strong></td>
-                    <td><strong>84.19% ± 0.15</strong></td>
-                </tr>
-                <tr>
-                    <td>ResNet-50 (frozen backbone)</td>
-                    <td>Controlled ablation</td>
-                    <td>224×224</td>
-                    <td>23,714,981</td>
-                    <td>69.29% ± 0.06</td>
-                    <td>68.96% ± 0.08</td>
-                </tr>
-            </tbody>
-        </table>
-        <p><strong>Links:</strong>
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/PROPOSAL.md" target="_blank">Dataset Proposal</a> &nbsp;|&nbsp;
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/notebooks/main.ipynb" target="_blank">Notebook (main.ipynb)</a> &nbsp;|&nbsp;
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/results.csv" target="_blank">Results CSV</a> &nbsp;|&nbsp;
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/summary.csv" target="_blank">Summary CSV</a> &nbsp;|&nbsp;
-            <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/AI_USAGE.md" target="_blank">AI Usage Disclosure</a>
-        </p>
-    </div>
+        <div class="actions">
+            <a class="btn primary" href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2" target="_blank">Source Code</a>
+            <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2/results" target="_blank">Results</a>
+            <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2/checkpoints" target="_blank">Checkpoints</a>
+            <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/G-03_A2_Report.pdf" target="_blank">Report</a>
+            <a class="btn" href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/G-03_A2_Slides.pdf" target="_blank">Slides</a>
+            <a class="btn" href="https://youtu.be/QK_4A9X5MlU" target="_blank">Video</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>1. Problem Statement</h2>
+        <div class="card">
+            <p>
+                We study fine-grained food classification on Food-101, with 101 classes, 101,000 real-world food images,
+                with a fixed train/validation/test split. The goal is to compare three models under the same
+                evaluation protocol: a simple CNN trained from scratch, a pretrained ResNet-50 with the backbone frozen,
+                and a pretrained ResNet-50 with full fine-tuning. We report accuracy, macro-F1, parameter counts,
+                training time, inference time, learning curves, confusing classes, and representative prediction examples.
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Dataset and EDA</h2>
+        <div class="card">
+            <p>
+                <strong>Dataset:</strong> Food-101 (Bossard et al., 2014), a benchmark for fine-grained multi-class food
+                recognition. It contains 101 classes and 101,000 images, with an official split of 75,750 training images
+                and 25,250 test images. The training set is further split into train/validation with a stratified 10%
+                validation split using a fixed seed of 42.
+            </p>
+            <p>
+                <strong>Preprocessing:</strong> images are resized to the model input size, normalized with ImageNet mean and
+                standard deviation, and paired with a consistent split for all runs. The same data split is reused across
+                seeds and model families to ensure a controlled comparison.
+            </p>
+            <p>
+                <strong>EDA:</strong> the notebook pipeline downloads the dataset, reviews class balance, inspects
+                representative images, analyse pixel value distribution and implement image hashing for within-class near-duplicate detection.
+            </p>
+
+            <div class="eda-stack">
+                <figure>
+                    <img src="results/eda/training_class_distribution.png" alt="Class distribution in the original training set, near duplicates removed">
+                    <figcaption>Class distribution in the original training set (near duplicates removed)</figcaption>
+                </figure>
+                <figure>
+                    <img src="results/eda/training_hsv_distribution.png" alt="HSV distribution in the original training set">
+                    <figcaption>HSV distribution in the original training set.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>3. Methodology</h2>
+        <div class="card">
+            <table class="methodology">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Role</th>
+                        <th>Input size</th>
+                        <th>Total parameters</th>
+                        <th>Trainable parameters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Assignment 1 CNN</td>
+                        <td>From-scratch reference baseline</td>
+                        <td>128×128</td>
+                        <td>8,829,349</td>
+                        <td>8,829,349</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50 (frozen backbone)</td>
+                        <td>Controlled ablation / linear probe</td>
+                        <td>224×224</td>
+                        <td>23,714,981</td>
+                        <td>206,949</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50 (full fine-tuning)</td>
+                        <td>Main pretrained model</td>
+                        <td>224×224</td>
+                        <td>23,714,981</td>
+                        <td>23,714,981</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                <strong>From-scratch CNN:</strong>
+                The Assignment 1 CNN architecture is reused and trained from random
+                initialization on Food-101. It contains four convolutional blocks
+                (Conv3×3, ReLU, MaxPool2) with 32, 64, 128, and 256 output channels,
+                followed by a fully connected classifier with 512 hidden units
+                and 101 outputs. Dropout is disabled.
+            </p>
+
+            <p>
+                <strong>Pretrained ResNet-50:</strong>
+                Both configurations use torchvision ResNet-50 initialized with
+                ImageNet IMAGENET1K_V2 weights. The original 1000-class output
+                layer is replaced with a Linear(2048, 101) classification head.
+                The frozen-backbone variant optimizes only the 206,949-parameter
+                head, with all backbone parameters frozen and BatchNorm layers
+                held in evaluation mode. Full fine-tuning updates all
+                23,714,981 parameters.
+            </p>
+
+            <p>
+                <strong>Controlled experiment:</strong>
+                The hypothesis is that full fine-tuning produces higher test
+                accuracy and macro-F1 than training only the classification head.
+                Backbone trainability is the changed factor; the data split,
+                input resolution, augmentation, optimizer, learning rate,
+                weight decay, batch size, epoch budget, seeds, hardware, and
+                mixed-precision setting are held fixed between the two
+                ResNet-50 configurations.
+            </p>
+
+            <p>
+                The from-scratch CNN serves as a reference baseline rather than
+                part of the controlled ablation, since it also differs in
+                initialization, input resolution, learning rate, and parameter
+                count. All three configurations use cross-entropy loss on raw
+                logits and are evaluated with top-1 accuracy and macro-F1.
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Experimental Setup</h2>
+        <div class="card">
+            <ul>
+                <li>
+                    <strong>Dataset:</strong> Food-101, containing 101 classes
+                    and 101,000 RGB images.
+                </li>
+                <li>
+                    <strong>Data split:</strong> 68,175 training images,
+                    7,575 validation images, and 25,250 official test images.
+                    Validation is a stratified 10% split of the official
+                    training partition.
+                </li>
+                <li>
+                    <strong>Split seed:</strong> 42, fixed across all models
+                    and training runs.
+                </li>
+                <li>
+                    <strong>Training seeds:</strong> 42, 67, and 69, giving
+                    nine runs across the three configurations.
+                </li>
+                <li>
+                    <strong>Preprocessing:</strong> ImageNet normalization;
+                    RandomResizedCrop (scale 0.7–1.0) and RandomHorizontalFlip
+                    during training; resize followed by center crop during
+                    validation and testing.
+                </li>
+                <li>
+                    <strong>Optimizer:</strong> AdamW with weight decay 1e-4
+                    for all models.
+                </li>
+                <li>
+                    <strong>Learning rate:</strong> 1e-3 for the from-scratch
+                    CNN; 1e-4 for both ResNet-50 configurations.
+                </li>
+                <li>
+                    <strong>Epochs:</strong> 30 per run, without a learning-rate
+                    scheduler or early stopping.
+                </li>
+                <li>
+                    <strong>Batch size:</strong> 128, with drop_last enabled
+                    for training.
+                </li>
+                <li>
+                    <strong>Mixed precision:</strong> CUDA autocast and gradient
+                    scaling enabled during training.
+                </li>
+                <li>
+                    <strong>Model selection:</strong> The checkpoint with the
+                    highest validation macro-F1 is restored. The official test
+                    set is evaluated exactly once per run and is never used
+                    for model selection.
+                </li>
+                <li>
+                    <strong>Controlled ablation:</strong> Frozen backbone
+                    versus full fine-tuning, with backbone trainability as
+                    the changed factor and other experimental settings fixed.
+                </li>
+                <li>
+                    <strong>Evaluation:</strong> Test accuracy, macro-F1,
+                    per-class precision/recall/F1, confusion matrices,
+                    correct and incorrect prediction examples, training
+                    time, and inference latency.
+                </li>
+                <li>
+                    <strong>Hardware:</strong> One NVIDIA A100-SXM4-80GB GPU.
+                </li>
+                <li>
+                    <strong>Software:</strong> PyTorch 2.11.0+cu128,
+                    CUDA 12.8, and torchvision 0.26.0.
+                </li>
+                <li>
+                    <strong>Data-cleaning limitation:</strong> The EDA
+                    notebook identified 162 training images for duplicate
+                    removal, but the reported training runs used the
+                    unmodified official split. The analysis also identified
+                    102 train-test near-duplicate pairs, representing at
+                    most 0.40% of test images.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="results">
+        <h2>5. Results</h2>
+        <div class="card">
+            <p>
+                Test accuracy and macro-F1 are reported as mean ± standard
+                deviation over training seeds 42, 67, and 69. Training time
+                and inference latency are the means over the same three runs.
+                All experiments were conducted on one NVIDIA A100-SXM4-80GB.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Role</th>
+                        <th>Image size</th>
+                        <th>Test accuracy</th>
+                        <th>Test macro-F1</th>
+                        <th>Train time</th>
+                        <th>Inference (ms/sample)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Assignment 1 CNN</td>
+                        <td>From-scratch baseline</td>
+                        <td>128×128</td>
+                        <td>40.18% ± 2.38</td>
+                        <td>39.74% ± 2.48</td>
+                        <td>1,342.5 s</td>
+                        <td>0.416</td>
+                    </tr>
+                    <tr>
+                        <td>ResNet-50 (frozen backbone)</td>
+                        <td>Controlled ablation</td>
+                        <td>224×224</td>
+                        <td>69.29% ± 0.06</td>
+                        <td>68.96% ± 0.08</td>
+                        <td>1,252.0 s</td>
+                        <td>0.730</td>
+                    </tr>
+                    <tr class="best">
+                        <td>ResNet-50 (full fine-tuning)</td>
+                        <td>Main pretrained model</td>
+                        <td>224×224</td>
+                        <td><strong>84.20% ± 0.10</strong></td>
+                        <td><strong>84.19% ± 0.15</strong></td>
+                        <td>1,698.1 s</td>
+                        <td>0.623</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                Training time includes all 30 training epochs and the
+                validation pass after each epoch. Inference latency was
+                measured over the full 25,250-image test set after two
+                warm-up batches, without mixed precision.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Key takeaway</h3>
+            <p>
+                Full fine-tuning improves mean test accuracy by
+                <strong>14.91 percentage points</strong> and mean test
+                macro-F1 by <strong>15.23 percentage points</strong>
+                over the frozen-backbone variant. The improvement is
+                consistent across all three seeds and supports the
+                hypothesis under the specified 30-epoch experimental
+                protocol.
+            </p>
+
+            <p>
+                This improvement comes at the cost of training
+                23,508,032 additional backbone parameters and
+                <strong>35.6% greater mean training time</strong>.
+                The from-scratch CNN achieves substantially lower
+                accuracy but has lower measured inference latency
+                at its smaller input resolution.
+            </p>
+
+            <p>
+                <strong>Training behavior:</strong>
+                Full fine-tuning selects its best validation macro-F1
+                checkpoint at epochs 4, 9, and 4 for the three seeds,
+                then exhibits overfitting as training continues.
+                In contrast, the frozen-backbone model selects epoch
+                30 in every run, with validation performance still
+                improving at the end of training.
+            </p>
+        </div>
+
+        <h3>Training and validation curves</h3>
+        <p class="section-note">Click any figure to open it full-size.</p>
+        <div class="grid curves">
+            <figure><img src="results/curves/baseline_seed42.png" alt="Baseline seed 42 curves"><figcaption>Baseline (seed 42)</figcaption></figure>
+            <figure><img src="results/curves/resnet50_frozen_seed42.png" alt="Frozen ResNet-50 seed 42 curves"><figcaption>Frozen ResNet-50 (seed 42)</figcaption></figure>
+            <figure><img src="results/curves/resnet50_full_seed42.png" alt="Full ResNet-50 seed 42 curves"><figcaption>Full ResNet-50 (seed 42)</figcaption></figure>
+            <figure><img src="results/curves/baseline_seed67.png" alt="Baseline seed 67 curves"><figcaption>Baseline (seed 67)</figcaption></figure>
+            <figure><img src="results/curves/resnet50_frozen_seed67.png" alt="Frozen ResNet-50 seed 67 curves"><figcaption>Frozen ResNet-50 (seed 67)</figcaption></figure>
+            <figure><img src="results/curves/resnet50_full_seed67.png" alt="Full ResNet-50 seed 67 curves"><figcaption>Full ResNet-50 (seed 67)</figcaption></figure>
+        </div>
+
+        <h3>Confusion matrices</h3>
+        <div class="grid confusion">
+            <figure><img src="results/confusion/baseline_seed42_top_confusions.png" alt="Baseline confusion summary"><figcaption>Baseline top confusions</figcaption></figure>
+            <figure><img src="results/confusion/resnet50_frozen_seed42_top_confusions.png" alt="Frozen ResNet-50 confusion summary"><figcaption>Frozen ResNet-50 top confusions</figcaption></figure>
+            <figure><img src="results/confusion/resnet50_full_seed42_top_confusions.png" alt="Full ResNet-50 confusion summary"><figcaption>Full ResNet-50 top confusions</figcaption></figure>
+        </div>
+
+        <h3>Correct and incorrect predictions</h3>
+        <div class="grid examples">
+            <figure><img src="results/examples/baseline_seed42.png" alt="Baseline examples"><figcaption>Baseline examples</figcaption></figure>
+            <figure><img src="results/examples/resnet50_frozen_seed42.png" alt="Frozen ResNet-50 examples"><figcaption>Frozen ResNet-50 examples</figcaption></figure>
+            <figure><img src="results/examples/resnet50_full_seed42.png" alt="Full ResNet-50 examples"><figcaption>Full ResNet-50 examples</figcaption></figure>
+        </div>
+    </section>
+
+    <section id="analysis">
+        <h2>6. Comparison and Discussion</h2>
+        <div class="card">
+            <p>
+                The full fine-tuning model is by far the strongest approach: it reaches about 84.2% test accuracy and
+                84.19% macro-F1, while the frozen backbone stays at 69.29%/68.96%. The baseline CNN underperforms both
+                transfer-learning setups, showing that the Food-101 task benefits substantially from pretrained visual
+                features and well-adapted representations.
+            </p>
+            <p>
+                The gap between the frozen and full models indicates that task-specific adaptation matters. The frozen
+                backbone still captures useful generic visual cues, but the final classification performance is limited by
+                its fixed representation. By contrast, full fine-tuning updates the encoder to match fine-grained Food-101
+                distinctions, which is especially important for visually similar dishes and classes with subtle appearance
+                differences.
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <h2>7. Limitations and Conclusion</h2>
+        <div class="card">
+            <p>
+                The comparison is limited to one dataset, three seeds, and one training budget. The conclusions are therefore
+                most directly tied to this Food-101 protocol, not to all large-scale classification tasks. Nevertheless, the
+                results are consistent across seeds and show a clear ordering: baseline < frozen backbone < full fine-tuning.
+            </p>
+            <p>
+                Under this protocol, the pretrained ResNet-50 with full fine-tuning is the clear winner. It delivers the best
+                accuracy and macro-F1 while preserving strong inference speed. The frozen variant remains a useful controlled
+                ablation, and the baseline provides a simple reference point for understanding the benefit of transfer learning.
+            </p>
+        </div>
+    </section>
+
+    <section id="reproducibility">
+        <h2>8. Reproducibility and Deliverables</h2>
+        <div class="card">
+            <ul>
+                <li><strong>Source code:</strong>
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/notebooks/main.ipynb" target="_blank">main.ipynb</a>,
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2/src" target="_blank">src/</a>,
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/PROPOSAL.md" target="_blank">PROPOSAL.md</a>.
+                </li>
+                <li><strong>Checkpoints:</strong>
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2/checkpoints" target="_blank">assignment2/checkpoints</a>.
+                </li>
+                <li><strong>Results:</strong>
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/tree/main/assignment2/results" target="_blank">assignment2/results</a>,
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/results/summary.csv" target="_blank">summary.csv</a>.
+                </li>
+                <li><strong>Report, slides:</strong>
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/G-03_A2_Report.pdf" target="_blank">report</a>,
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/materials/G-03_A2_Slides.pdf" target="_blank">slides</a>.
+                </li>
+                <li><strong>AI usage disclosure:</strong>
+                    <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment2/AI_USAGE.md" target="_blank">assignment2/AI_USAGE.md</a>.
+                </li>
+            </ul>
+
+            <h3>How to reproduce</h3>
+<pre>
+git clone https://github.com/DangXiMi/CO3133-DeepLearning.git
+cd CO3133-DeepLearning
+pip install -r assignment2/requirements.txt
+jupyter notebook assignment2/notebooks/main.ipynb
+</pre>
+
+            <p>
+                Run all cells from top to bottom. The notebook downloads Food-101 and writes the model checkpoints and
+                results to <code>assignment2/checkpoints</code> and <code>assignment2/results</code>. The multi-seed analysis
+                aggregates all runs and preserves the same train/validation/test split across model families.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    CO3133 · Deep Learning and Its Applications · Semester 261 · Group G-03
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <span class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</span>
+    <img id="lightbox-image" src="" alt="Expanded figure">
+</div>
+
+<script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+
+    document.querySelectorAll("figure img").forEach((image) => {
+        image.addEventListener("click", () => {
+            lightboxImage.src = image.src;
+            lightbox.classList.add("open");
+            lightbox.setAttribute("aria-hidden", "false");
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+    }
+
+    lightbox.addEventListener("click", closeLightbox);
+    document.getElementById("lightbox-close").addEventListener("click", (event) => {
+        event.stopPropagation();
+        closeLightbox();
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLightbox();
+    });
+</script>
 
 </body>
 </html>
