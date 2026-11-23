@@ -2,3 +2,10 @@ venv/
 __pycache__/
 *.ipynb_checkpoints
 data/
+
+# Large local checkpoints (rebuild with the A3 notebooks)
+assignment3/checkpoints/image_resnet18.pt
+assignment3/checkpoints/image_resnet50.pt
+assignment3/checkpoints/text_distilbert.pt
+assignment3/checkpoints/text_bert.pt
+assignment3/checkpoints/finetune_gmu.pt
