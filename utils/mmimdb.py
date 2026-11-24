@@ -1,6 +1,7 @@
 """MM-IMDb loading, labels, splits, and datasets for Assignment 3."""
 
 from pathlib import Path
+import csv
 import json
 
 import numpy as np
@@ -51,27 +52,93 @@ def build_label_matrix(dataset, genres):
     return labels
 
 
+def _deduplicate_splits(splits):
+    """Keep one copy per exact record, with priority test > dev > train."""
+    duplicate_file = ROOT / "assignment3" / "results" / "exact_duplicate_records.csv"
+    if not duplicate_file.exists():
+        return splits
+
+    split_of = {}
+    for name, indices in splits.items():
+        for index in indices:
+            split_of[int(index)] = name
+    priority = {"train": 0, "dev": 1, "test": 2}
+
+    dropped = set()
+    audit_rows = []
+    with duplicate_file.open() as handle:
+        for row in csv.DictReader(handle):
+            first = int(row["id1"])
+            second = int(row["id2"])
+            if first not in split_of or second not in split_of:
+                continue
+            first_split = split_of[first]
+            second_split = split_of[second]
+
+            if first_split == second_split:
+                keep, drop = first, second
+            else:
+                keep, drop = (
+                    (first, second)
+                    if priority[first_split] >= priority[second_split]
+                    else (second, first)
+                )
+
+            dropped.add(drop)
+            audit_rows.append(
+                {
+                    "id1": first,
+                    "id2": second,
+                    "split_id1": first_split,
+                    "split_id2": second_split,
+                    "kept": keep,
+                    "dropped": drop,
+                    "kept_split": split_of[keep],
+                    "dropped_split": split_of[drop],
+                }
+            )
+
+    if dropped:
+        audit_file = ROOT / "assignment3" / "results" / "dedup_dropped_indices.csv"
+        with audit_file.open("w", newline="") as handle:
+            fieldnames = [
+                "id1", "id2", "split_id1", "split_id2",
+                "kept", "dropped", "kept_split", "dropped_split",
+            ]
+            writer = csv.DictWriter(handle, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(audit_rows)
+
+    return {
+        name: np.array([index for index in indices if int(index) not in dropped])
+        for name, indices in splits.items()
+    }
+
+
 def build_splits(dataset, genres, force=False):
     if SPLIT_FILE.exists() and not force:
         data = np.load(SPLIT_FILE)
-        return {key: data[key] for key in ("train", "dev", "test")}
+        splits = {key: data[key] for key in ("train", "dev", "test")}
+    else:
+        labels = build_label_matrix(dataset, genres)
+        x = np.arange(len(dataset))[:, None]
 
-    labels = build_label_matrix(dataset, genres)
-    x = np.arange(len(dataset))[:, None]
+        train_dev_idx, _, test_idx, _ = iterative_train_test_split(
+            x, labels, test_size=0.30
+        )
+        train_idx, _, dev_idx, _ = iterative_train_test_split(
+            train_dev_idx, labels[train_dev_idx[:, 0]], test_size=0.10 / 0.70
+        )
 
-    train_dev_idx, _, test_idx, _ = iterative_train_test_split(
-        x, labels, test_size=0.30
-    )
-    train_idx, _, dev_idx, _ = iterative_train_test_split(
-        train_dev_idx, labels[train_dev_idx[:, 0]], test_size=0.10 / 0.70
-    )
+        splits = {
+            "train": train_idx[:, 0],
+            "dev": dev_idx[:, 0],
+            "test": test_idx[:, 0],
+        }
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        np.savez(SPLIT_FILE, **splits)
 
-    splits = {
-        "train": train_idx[:, 0],
-        "dev": dev_idx[:, 0],
-        "test": test_idx[:, 0],
-    }
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    splits = _deduplicate_splits(splits)
     np.savez(SPLIT_FILE, **splits)
     return splits
 

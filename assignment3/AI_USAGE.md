@@ -49,3 +49,15 @@
 - Affected files: `utils/mmimdb.py`; `assignment3/src/models.py`; `assignment3/src/training_loop.py`; `assignment3/notebooks/finetune_gmu.ipynb`
 - Responsible member: Nguyen Van An
 - Sources: torchvision ResNet-50 and Transformers BERT documentation; CO3133 handbook §29.2
+
+**Entry 5 — Duplicate cleanup and clean reruns**
+- Tool: opencode CLI (GLM-5.3)
+- Used by: Nguyen Van An
+- Stage: A3 M3 development — duplicate cleanup and verification (24 Nov 2026)
+- Purpose: Apply the EDA duplicate finding to the actual split and rerun M2, M3, and the joint fine-tune cleanly.
+- Prompt summary: the EDA found 6 exact-duplicate pairs; check split leakage, deduplicate, rerun, and verify carefully before pushing.
+- AI contribution: inspected the exact duplicate records and split memberships, implemented a deterministic test > dev > train dedup policy with an audit CSV, and reran the M2, M3, and fine-tuning notebooks. Also fixed model-builder checks so M2 explicitly uses ResNet-18 and DistilBERT while M3 uses ResNet-50 and BERT.
+- Student verification: the group reviewed the duplicate audit and split indices. All 6 exact-duplicate pairs now have only one member retained in the final split, and the final split is **15,553 train / 2,595 dev / 7,805 test**. The final results and notebook outputs were checked against `results/m2_results.json`, `results/m3_results.json`, and `results/m3_finetune_gmu.json`.
+- Affected files: `utils/mmimdb.py`; `assignment3/src/models.py`; `assignment3/notebooks/main.ipynb`; `assignment3/notebooks/m3.ipynb`; `assignment3/notebooks/finetune_gmu.ipynb`; `assignment3/results/dedup_dropped_indices.csv`
+- Responsible member: Nguyen Van An
+- Sources: `assignment3/results/exact_duplicate_records.csv`; assignment 3 proposal and handbook §28.1 on leakage prevention

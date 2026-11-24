@@ -1,0 +1,7 @@
+id1,id2,split_id1,split_id2,kept,dropped,kept_split,dropped_split
+2610,24538,test,train,2610,24538,test,train
+9103,14290,test,train,9103,14290,test,train
+9538,25589,dev,train,9538,25589,dev,train
+10875,13532,train,train,10875,13532,train,train
+18745,23939,test,test,18745,23939,test,test
+19999,20778,train,train,19999,20778,train,train

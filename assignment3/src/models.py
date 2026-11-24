@@ -2,15 +2,25 @@
 
 import torch
 import torch.nn as nn
-from torchvision.models import ResNet50_Weights, resnet50
+from torchvision.models import (
+    ResNet18_Weights,
+    ResNet50_Weights,
+    resnet18,
+    resnet50,
+)
 from transformers import AutoModel, AutoModelForSequenceClassification
 
 TEXT_MODEL_NAME = "bert-base-uncased"
 
 
-def build_image_model(num_labels=23, pretrained=True, freeze_backbone=False):
-    weights = ResNet50_Weights.IMAGENET1K_V2 if pretrained else None
-    model = resnet50(weights=weights)
+def build_image_model(num_labels=23, backbone="resnet50", freeze_backbone=False):
+    if backbone == "resnet18":
+        model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
+    elif backbone == "resnet50":
+        model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+    else:
+        raise ValueError(f"Unsupported image backbone: {backbone}")
+
     model.fc = nn.Sequential(
         nn.Dropout(0.3),
         nn.Linear(model.fc.in_features, num_labels),
@@ -23,22 +33,27 @@ def build_image_model(num_labels=23, pretrained=True, freeze_backbone=False):
     return model
 
 
-def build_text_model(num_labels=23):
+def build_text_model(num_labels=23, model_name=TEXT_MODEL_NAME):
     return AutoModelForSequenceClassification.from_pretrained(
-        TEXT_MODEL_NAME,
+        model_name,
         num_labels=num_labels,
         problem_type="multi_label_classification",
     )
 
 
-def build_image_encoder():
-    model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+def build_image_encoder(backbone="resnet50"):
+    if backbone == "resnet18":
+        model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
+    elif backbone == "resnet50":
+        model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+    else:
+        raise ValueError(f"Unsupported image backbone: {backbone}")
     model.fc = nn.Identity()
     return model
 
 
-def build_text_encoder():
-    return AutoModel.from_pretrained(TEXT_MODEL_NAME)
+def build_text_encoder(model_name=TEXT_MODEL_NAME):
+    return AutoModel.from_pretrained(model_name)
 
 
 def build_fusion_head(input_dim=2816, hidden_dim=512, num_labels=23):

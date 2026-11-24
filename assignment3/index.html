@@ -94,47 +94,57 @@
     </div>
 
     <div class="section">
-        <h3> Progress (updated 23 Nov 2026)</h3>
-        <p><strong>Milestones:</strong> M1 Dataset Proposal — submitted. M2 Draft — complete. M3 experiments — complete:
-            GMU with modality dropout, ablation, missing-modality evaluation, and error/support-conflict analysis.
+        <h3> Progress (updated 24 Nov 2026)</h3>
+        <p><strong>Milestones:</strong> M1 Dataset Proposal — submitted. M2 Draft — complete. M3 experiments — complete.
+            GMU ablation, missing-modality evaluation, actual joint multimodal fine-tuning, and error/support-conflict analysis.
             Final report, slides, and video are pending.</p>
         <ul>
             <li><strong>Task track:</strong> Image-text classification</li>
-            <li><strong>Dataset:</strong> MM-IMDb — 23 classes, 25,959 pairs of movie posters and plot summaries
-                (15,558 train / 2,595 validation / 7,806 test),
-                multi-label genre classification</li>
+            <li><strong>Dataset:</strong> MM-IMDb — 23 classes, 25,959 pairs of movie posters and plot summaries.
+                Exact duplicates found in the EDA were removed with priority test > dev > train.
+                Final split: 15,553 train / 2,595 dev / 7,805 test.</li>
             <li><strong>Models:</strong>
                 <ul>
-                    <li>Unimodal A: ResNet-50 on posters, fine-tuned.</li>
-                    <li>Unimodal B: BERT-base on plot summaries, fine-tuned.</li>
-                    <li>Simple fusion: frozen image and text encoders, cached 2,048-d + 768-d features, concatenation head.</li>
+                    <li>Unimodal A: ResNet-18 and ResNet-50 on posters, fine-tuned.</li>
+                    <li>Unimodal B: DistilBERT and BERT-base on plot summaries, fine-tuned.</li>
+                    <li>Simple fusion: frozen image and text encoders, cached features, concatenation head.</li>
                     <li>Improved fusion: Gated Multimodal Unit (GMU), with and without modality dropout.</li>
+                    <li>Joint fine-tuning: ResNet-50 and BERT unfrozen with encoder LR 1e-5 and GMU LR 1e-4.</li>
                 </ul>
             </li>
         </ul>
-        <p><strong>M3 results (test split, seed 42):</strong></p>
+
+        <p><strong>M2 results (deduplicated test split, seed 42):</strong></p>
         <table>
-            <thead>
-                <tr><th>Model</th><th>Macro-F1</th><th>Micro-F1</th><th>Sample F1</th><th>Exact match</th></tr>
-            </thead>
+            <thead><tr><th>Model</th><th>Macro-F1</th><th>Micro-F1</th><th>Sample F1</th><th>Exact match</th></tr></thead>
             <tbody>
-                <tr><td>Image-only ResNet-50</td><td>0.334</td><td>0.437</td><td>0.439</td><td>0.036</td></tr>
-                <tr><td>Text-only BERT</td><td>0.576</td><td>0.651</td><td>0.656</td><td>0.170</td></tr>
-                <tr><td>Simple fusion</td><td>0.587</td><td>0.645</td><td>0.642</td><td>0.141</td></tr>
-                <tr><td>GMU, no dropout</td><td>0.585</td><td>0.647</td><td>0.644</td><td>0.149</td></tr>
-                <tr><td>GMU + modality dropout</td><td><strong>0.589</strong></td><td>0.648</td><td>0.645</td><td>0.151</td></tr>
+                <tr><td>Image-only ResNet-18</td><td>0.316</td><td>0.431</td><td>0.427</td><td>0.023</td></tr>
+                <tr><td>Text-only DistilBERT</td><td>0.568</td><td>0.644</td><td>0.646</td><td>0.172</td></tr>
+                <tr><td>Simple fusion</td><td><strong>0.582</strong></td><td>0.645</td><td>0.638</td><td>0.146</td></tr>
             </tbody>
         </table>
-        <p><strong>Ablation:</strong> GMU with modality dropout is best on macro-F1.
-            Image dropped: 0.557; text dropped: 0.290. Text is the stronger modality.</p>
-        <p><strong>Actual joint fine-tuning:</strong>
-            ResNet-50 and BERT unfrozen with encoder LR 1e-5 and GMU LR 1e-4, 3 epochs.
-            This reaches macro-F1 <strong>0.596</strong>, micro-F1 0.670,
-            sample F1 0.669, and exact match <strong>0.194</strong>,
-            improving over the frozen-encoder GMU by <strong>+0.007 macro-F1</strong>.
-            Image dropped: 0.582; text dropped: 0.204.</p>
-        <p><strong>Support vs conflict vs text-only:</strong>
-            601 movies where GMU is correct and text-only is wrong, versus 749 where GMU is wrong and text-only is correct.
+
+        <p><strong>M3 results (deduplicated test split, seed 42):</strong></p>
+        <table>
+            <thead><tr><th>Model</th><th>Macro-F1</th><th>Micro-F1</th><th>Sample F1</th><th>Exact match</th></tr></thead>
+            <tbody>
+                <tr><td>Image-only ResNet-50</td><td>0.331</td><td>0.439</td><td>0.442</td><td>0.037</td></tr>
+                <tr><td>Text-only BERT</td><td>0.568</td><td>0.643</td><td>0.646</td><td>0.182</td></tr>
+                <tr><td>Simple fusion</td><td>0.582</td><td>0.642</td><td>0.640</td><td>0.153</td></tr>
+                <tr><td>GMU, no dropout</td><td>0.588</td><td>0.650</td><td>0.646</td><td>0.146</td></tr>
+                <tr><td>GMU + modality dropout</td><td>0.586</td><td>0.649</td><td>0.647</td><td>0.156</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Ablation:</strong> GMU without dropout is slightly better than with dropout on macro-F1: 0.588 vs 0.586.
+            Missing-modality evaluation: image dropped 0.523 and text dropped 0.285 for GMU without dropout;
+            image dropped 0.540 and text dropped 0.287 for GMU with dropout. Text is the stronger modality.</p>
+        <p><strong>Actual joint fine-tuning:</strong> ResNet-50 and BERT unfrozen with encoder LR 1e-5 and GMU LR 1e-4, 3 epochs.
+            This reaches macro-F1 <strong>0.597</strong>, micro-F1 0.670, sample F1 0.672, and exact match <strong>0.177</strong>,
+            improving over the frozen GMU by <strong>+0.008 macro-F1</strong>.
+            Image dropped: 0.581; text dropped: 0.191.</p>
+        <p><strong>Support vs conflict vs text-only, GMU without dropout:</strong>
+            570 movies where GMU is correct and text-only is wrong, versus 847 where GMU is wrong and text-only is correct.
             The result is better on average, not guaranteed on every movie.</p>
         <p><strong>Links:</strong>
             <a href="https://github.com/DangXiMi/CO3133-DeepLearning/blob/main/assignment3/PROPOSAL.md" target="_blank">Dataset Proposal</a> &nbsp;|&nbsp;

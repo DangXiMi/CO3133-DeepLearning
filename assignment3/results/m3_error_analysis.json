@@ -1,515 +1,515 @@
 {
   "support_analysis": {
     "simple_fusion": {
-      "both_correct": 528,
-      "a_only": 571,
-      "b_only": 797,
-      "both_wrong": 5910
+      "both_correct": 583,
+      "a_only": 608,
+      "b_only": 837,
+      "both_wrong": 5777
     },
     "gmu_dropout": {
-      "both_correct": 576,
-      "a_only": 601,
-      "b_only": 749,
-      "both_wrong": 5880
+      "both_correct": 600,
+      "a_only": 619,
+      "b_only": 820,
+      "both_wrong": 5766
     },
     "gmu_no_dropout": {
-      "both_correct": 561,
-      "a_only": 601,
-      "b_only": 764,
-      "both_wrong": 5880
+      "both_correct": 573,
+      "a_only": 570,
+      "b_only": 847,
+      "both_wrong": 5815
     }
   },
   "error_counts": {
     "image_only": [
       {
-        "genre": "Music",
-        "false_positive": 2931,
-        "false_negative": 136,
-        "total": 3067
-      },
-      {
         "genre": "Drama",
-        "false_positive": 2325,
-        "false_negative": 509,
-        "total": 2834
-      },
-      {
-        "genre": "Crime",
-        "false_positive": 1898,
-        "false_negative": 525,
-        "total": 2423
-      },
-      {
-        "genre": "Comedy",
-        "false_positive": 1255,
-        "false_negative": 891,
-        "total": 2146
+        "false_positive": 2623,
+        "false_negative": 418,
+        "total": 3041
       },
       {
         "genre": "Romance",
-        "false_positive": 1324,
-        "false_negative": 767,
-        "total": 2091
+        "false_positive": 2025,
+        "false_negative": 625,
+        "total": 2650
       },
       {
         "genre": "Thriller",
-        "false_positive": 1205,
-        "false_negative": 728,
-        "total": 1933
+        "false_positive": 1550,
+        "false_negative": 630,
+        "total": 2180
       },
       {
-        "genre": "Biography",
-        "false_positive": 1239,
-        "false_negative": 296,
-        "total": 1535
+        "genre": "Comedy",
+        "false_positive": 1187,
+        "false_negative": 927,
+        "total": 2114
       },
       {
         "genre": "Mystery",
-        "false_positive": 1064,
-        "false_negative": 401,
-        "total": 1465
+        "false_positive": 1507,
+        "false_negative": 384,
+        "total": 1891
       },
       {
-        "genre": "Adventure",
-        "false_positive": 1089,
-        "false_negative": 375,
-        "total": 1464
+        "genre": "Crime",
+        "false_positive": 1156,
+        "false_negative": 704,
+        "total": 1860
+      },
+      {
+        "genre": "Biography",
+        "false_positive": 1572,
+        "false_negative": 272,
+        "total": 1844
       },
       {
         "genre": "Action",
-        "false_positive": 794,
-        "false_negative": 543,
-        "total": 1337
+        "false_positive": 1170,
+        "false_negative": 455,
+        "total": 1625
+      },
+      {
+        "genre": "Documentary",
+        "false_positive": 1185,
+        "false_negative": 309,
+        "total": 1494
+      },
+      {
+        "genre": "Adventure",
+        "false_positive": 952,
+        "false_negative": 413,
+        "total": 1365
       }
     ],
     "text_only": [
       {
         "genre": "Drama",
-        "false_positive": 1495,
-        "false_negative": 453,
-        "total": 1948
+        "false_positive": 1322,
+        "false_negative": 610,
+        "total": 1932
       },
       {
         "genre": "Comedy",
-        "false_positive": 962,
-        "false_negative": 665,
-        "total": 1627
+        "false_positive": 837,
+        "false_negative": 846,
+        "total": 1683
       },
       {
         "genre": "Romance",
-        "false_positive": 931,
-        "false_negative": 593,
-        "total": 1524
+        "false_positive": 838,
+        "false_negative": 671,
+        "total": 1509
       },
       {
         "genre": "Thriller",
-        "false_positive": 954,
-        "false_negative": 408,
-        "total": 1362
-      },
-      {
-        "genre": "Action",
-        "false_positive": 842,
-        "false_negative": 252,
-        "total": 1094
+        "false_positive": 704,
+        "false_negative": 539,
+        "total": 1243
       },
       {
         "genre": "Crime",
-        "false_positive": 521,
-        "false_negative": 362,
-        "total": 883
+        "false_positive": 550,
+        "false_negative": 357,
+        "total": 907
+      },
+      {
+        "genre": "Action",
+        "false_positive": 457,
+        "false_negative": 405,
+        "total": 862
       },
       {
         "genre": "Adventure",
-        "false_positive": 589,
-        "false_negative": 242,
-        "total": 831
-      },
-      {
-        "genre": "Mystery",
-        "false_positive": 364,
-        "false_negative": 327,
+        "false_positive": 347,
+        "false_negative": 344,
         "total": 691
       },
       {
-        "genre": "Film-Noir",
-        "false_positive": 571,
-        "false_negative": 45,
-        "total": 616
+        "genre": "Mystery",
+        "false_positive": 298,
+        "false_negative": 346,
+        "total": 644
       },
       {
         "genre": "Fantasy",
-        "false_positive": 254,
-        "false_negative": 280,
-        "total": 534
+        "false_positive": 337,
+        "false_negative": 269,
+        "total": 606
+      },
+      {
+        "genre": "Horror",
+        "false_positive": 269,
+        "false_negative": 210,
+        "total": 479
       }
     ],
     "simple_fusion": [
       {
         "genre": "Drama",
-        "false_positive": 1449,
-        "false_negative": 590,
-        "total": 2039
+        "false_positive": 1553,
+        "false_negative": 506,
+        "total": 2059
       },
       {
         "genre": "Romance",
-        "false_positive": 1432,
-        "false_negative": 436,
-        "total": 1868
+        "false_positive": 968,
+        "false_negative": 586,
+        "total": 1554
       },
       {
         "genre": "Comedy",
-        "false_positive": 928,
-        "false_negative": 602,
-        "total": 1530
+        "false_positive": 660,
+        "false_negative": 801,
+        "total": 1461
       },
       {
         "genre": "Thriller",
-        "false_positive": 627,
-        "false_negative": 591,
-        "total": 1218
-      },
-      {
-        "genre": "Crime",
-        "false_positive": 547,
-        "false_negative": 435,
-        "total": 982
+        "false_positive": 561,
+        "false_negative": 622,
+        "total": 1183
       },
       {
         "genre": "Action",
-        "false_positive": 544,
-        "false_negative": 353,
-        "total": 897
+        "false_positive": 676,
+        "false_negative": 310,
+        "total": 986
+      },
+      {
+        "genre": "Crime",
+        "false_positive": 537,
+        "false_negative": 447,
+        "total": 984
       },
       {
         "genre": "Mystery",
-        "false_positive": 541,
-        "false_negative": 301,
-        "total": 842
+        "false_positive": 694,
+        "false_negative": 259,
+        "total": 953
       },
       {
         "genre": "Adventure",
-        "false_positive": 507,
-        "false_negative": 296,
-        "total": 803
+        "false_positive": 592,
+        "false_negative": 277,
+        "total": 869
       },
       {
         "genre": "Fantasy",
-        "false_positive": 355,
-        "false_negative": 255,
-        "total": 610
+        "false_positive": 551,
+        "false_negative": 213,
+        "total": 764
       },
       {
         "genre": "Biography",
-        "false_positive": 409,
-        "false_negative": 177,
-        "total": 586
+        "false_positive": 347,
+        "false_negative": 195,
+        "total": 542
       }
     ],
     "gmu_no_dropout": [
       {
         "genre": "Drama",
-        "false_positive": 1387,
-        "false_negative": 579,
-        "total": 1966
+        "false_positive": 1504,
+        "false_negative": 515,
+        "total": 2019
       },
       {
         "genre": "Romance",
-        "false_positive": 966,
-        "false_negative": 605,
-        "total": 1571
+        "false_positive": 1131,
+        "false_negative": 527,
+        "total": 1658
       },
       {
         "genre": "Comedy",
-        "false_positive": 867,
-        "false_negative": 651,
-        "total": 1518
+        "false_positive": 826,
+        "false_negative": 657,
+        "total": 1483
       },
       {
         "genre": "Thriller",
-        "false_positive": 824,
-        "false_negative": 521,
-        "total": 1345
-      },
-      {
-        "genre": "Crime",
-        "false_positive": 606,
-        "false_negative": 408,
-        "total": 1014
+        "false_positive": 719,
+        "false_negative": 537,
+        "total": 1256
       },
       {
         "genre": "Action",
-        "false_positive": 693,
-        "false_negative": 319,
-        "total": 1012
+        "false_positive": 875,
+        "false_negative": 256,
+        "total": 1131
+      },
+      {
+        "genre": "Crime",
+        "false_positive": 565,
+        "false_negative": 417,
+        "total": 982
       },
       {
         "genre": "Adventure",
-        "false_positive": 453,
-        "false_negative": 326,
-        "total": 779
-      },
-      {
-        "genre": "Mystery",
-        "false_positive": 293,
-        "false_negative": 379,
-        "total": 672
+        "false_positive": 400,
+        "false_negative": 322,
+        "total": 722
       },
       {
         "genre": "Fantasy",
-        "false_positive": 413,
-        "false_negative": 229,
-        "total": 642
+        "false_positive": 479,
+        "false_negative": 205,
+        "total": 684
       },
       {
-        "genre": "Biography",
-        "false_positive": 380,
-        "false_negative": 189,
-        "total": 569
+        "genre": "Mystery",
+        "false_positive": 280,
+        "false_negative": 392,
+        "total": 672
+      },
+      {
+        "genre": "Horror",
+        "false_positive": 337,
+        "false_negative": 200,
+        "total": 537
       }
     ],
     "gmu_dropout": [
       {
         "genre": "Drama",
-        "false_positive": 1513,
-        "false_negative": 534,
-        "total": 2047
-      },
-      {
-        "genre": "Romance",
-        "false_positive": 1138,
-        "false_negative": 512,
-        "total": 1650
+        "false_positive": 1307,
+        "false_negative": 655,
+        "total": 1962
       },
       {
         "genre": "Comedy",
-        "false_positive": 623,
-        "false_negative": 802,
-        "total": 1425
+        "false_positive": 1072,
+        "false_negative": 547,
+        "total": 1619
+      },
+      {
+        "genre": "Romance",
+        "false_positive": 1059,
+        "false_negative": 547,
+        "total": 1606
       },
       {
         "genre": "Thriller",
-        "false_positive": 683,
-        "false_negative": 556,
-        "total": 1239
-      },
-      {
-        "genre": "Crime",
-        "false_positive": 686,
-        "false_negative": 369,
-        "total": 1055
+        "false_positive": 709,
+        "false_negative": 561,
+        "total": 1270
       },
       {
         "genre": "Action",
-        "false_positive": 514,
-        "false_negative": 381,
-        "total": 895
+        "false_positive": 631,
+        "false_negative": 332,
+        "total": 963
+      },
+      {
+        "genre": "Crime",
+        "false_positive": 458,
+        "false_negative": 467,
+        "total": 925
       },
       {
         "genre": "Adventure",
-        "false_positive": 547,
-        "false_negative": 274,
-        "total": 821
+        "false_positive": 452,
+        "false_negative": 323,
+        "total": 775
       },
       {
         "genre": "Mystery",
-        "false_positive": 485,
-        "false_negative": 314,
-        "total": 799
+        "false_positive": 417,
+        "false_negative": 347,
+        "total": 764
       },
       {
         "genre": "Fantasy",
-        "false_positive": 464,
-        "false_negative": 217,
-        "total": 681
+        "false_positive": 462,
+        "false_negative": 222,
+        "total": 684
       },
       {
-        "genre": "Horror",
-        "false_positive": 294,
-        "false_negative": 207,
-        "total": 501
+        "genre": "Biography",
+        "false_positive": 220,
+        "false_negative": 237,
+        "total": 457
       }
     ]
   },
   "example_cases": {
     "simple_fusion": {
       "fusion_correct_text_wrong": [
-        24,
+        2,
+        23,
         30,
+        42,
         75,
+        82,
         85,
+        106,
+        127,
         130,
-        140,
-        147,
-        154,
-        172,
         185,
-        205,
+        196,
+        221,
+        222,
         252,
         307,
         355,
-        357,
-        375,
-        377,
-        399,
-        402,
-        416
+        363,
+        374,
+        379
       ],
       "fusion_wrong_text_correct": [
-        8,
+        15,
         39,
-        42,
         46,
-        62,
+        58,
+        59,
         70,
-        81,
         83,
-        101,
         103,
+        108,
         123,
+        150,
         158,
-        160,
         161,
-        174,
-        188,
+        166,
+        171,
+        180,
         208,
-        209,
         215,
-        220
+        225,
+        239
       ],
       "both_wrong": [
         0,
         1,
-        2,
         3,
         4,
         5,
         6,
         7,
+        8,
         9,
         10,
         11,
         12,
         13,
         14,
-        15,
         16,
         17,
         18,
         19,
-        20
+        20,
+        21
       ],
       "both_correct": [
-        23,
-        82,
+        24,
+        62,
         84,
         89,
         93,
-        106,
+        101,
         109,
-        127,
         128,
-        150,
-        171,
-        180,
+        140,
+        174,
+        184,
+        188,
         192,
-        221,
+        220,
         230,
         277,
         285,
         289,
-        314,
-        320
+        313,
+        314
       ]
     },
     "gmu_dropout": {
       "fusion_correct_text_wrong": [
-        24,
+        2,
+        23,
         30,
+        33,
+        42,
+        75,
+        82,
         85,
-        124,
+        106,
+        127,
         130,
-        140,
         147,
-        168,
-        196,
+        154,
+        200,
         205,
+        221,
         222,
         231,
-        252,
-        262,
-        307,
-        313,
-        318,
-        355,
-        375,
-        399
+        247,
+        252
       ],
       "fusion_wrong_text_correct": [
-        8,
+        15,
         46,
-        62,
+        58,
+        59,
         70,
         83,
         103,
+        108,
         123,
-        127,
         150,
-        160,
+        166,
         171,
-        180,
-        188,
+        174,
         208,
         215,
         220,
         225,
-        264,
-        281,
-        285
+        239,
+        249,
+        258
       ],
       "both_wrong": [
         0,
         1,
-        2,
         3,
         4,
         5,
         6,
         7,
+        8,
         9,
         10,
         11,
         12,
         13,
         14,
-        15,
         16,
         17,
         18,
         19,
-        20
+        20,
+        21
       ],
       "both_correct": [
-        23,
+        24,
         39,
-        42,
-        81,
-        82,
+        62,
         84,
         89,
         93,
         101,
-        106,
         109,
         128,
+        140,
         158,
         161,
-        174,
+        180,
+        184,
+        188,
         192,
-        209,
-        221,
         230,
-        258
+        273,
+        277,
+        289
       ]
     }
   }

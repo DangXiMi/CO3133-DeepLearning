@@ -13,6 +13,8 @@
 
 - Iterative multi-label stratification with `scikit-multilearn`.
 - 60% train, 10% dev, 30% test.
+- Exact duplicate records found in the EDA are removed deterministically with priority **test > dev > train**, or the first copy when both copies lie in the same split.
+- The retained and dropped indices are recorded in `results/dedup_dropped_indices.csv`.
 - Split indices are frozen in `data/mm-imdb/splits.npz`.
 
 ## M2 models
@@ -23,37 +25,43 @@
 | Unimodal B | DistilBERT-base-uncased, fine-tuned | plot summary, ≤256 tokens |
 | Simple fusion | frozen image and text encoders, cached 512-d + 768-d features, concatenation head | poster + plot |
 
+For M3, Unimodal A is upgraded to **ResNet-50** and Unimodal B to **BERT-base-uncased**. GMU and the joint fine-tune also use this upgraded encoder pair.
+
 Metrics: macro-F1, micro-F1, sample-wise F1, exact match.
 
-## M2 results (test split, seed 42)
+## M2 results (deduplicated test split, seed 42)
+
+Final split sizes after the EDA duplicate cleanup: **15,553 train / 2,595 dev / 7,805 test**.
 
 | Model | Macro-F1 | Micro-F1 | Sample F1 | Exact match |
 |---|---:|---:|---:|---:|
-| Image-only ResNet-18 | 0.330 | 0.424 | 0.421 | 0.022 |
-| Text-only DistilBERT | 0.571 | 0.642 | 0.645 | 0.161 |
-| Simple fusion | **0.581** | 0.642 | 0.639 | 0.147 |
+| Image-only ResNet-18 | 0.316 | 0.431 | 0.427 | 0.023 |
+| Text-only DistilBERT | 0.568 | 0.644 | 0.646 | 0.172 |
+| Simple fusion | **0.582** | 0.645 | 0.638 | 0.146 |
 
 The simple fusion model slightly exceeds the text-only baseline on macro-F1. It is a small multimodal improvement, not a claim that multimodal always wins.
 
-## M3 results (test split, seed 42)
+## M3 results (deduplicated test split, seed 42)
 
 | Model | Macro-F1 | Micro-F1 | Sample F1 | Exact match |
 |---|---:|---:|---:|---:|
-| Image-only ResNet-50 | 0.334 | 0.437 | 0.439 | 0.036 |
-| Text-only BERT | 0.576 | 0.651 | 0.656 | 0.170 |
-| Simple fusion | 0.587 | 0.645 | 0.642 | 0.141 |
-| GMU, no modality dropout | 0.585 | 0.647 | 0.644 | 0.149 |
-| GMU + modality dropout (p = 0.2) | **0.589** | 0.648 | 0.645 | 0.151 |
+| Image-only ResNet-50 | 0.331 | 0.439 | 0.442 | 0.037 |
+| Text-only BERT | 0.568 | 0.643 | 0.646 | 0.182 |
+| Simple fusion | 0.582 | 0.642 | 0.640 | 0.153 |
+| GMU, no modality dropout | 0.588 | 0.650 | 0.646 | 0.146 |
+| GMU + modality dropout (p = 0.2) | 0.586 | 0.649 | 0.647 | 0.156 |
 
 ### Ablation and robustness
 
-- GMU with modality dropout gives the best macro-F1. Without dropout, GMU is roughly comparable to simple concatenation, so the dropout regularization is the main improvement.
-- Dropping the image at test time gives macro-F1 **0.557**; dropping the text gives **0.290**. Text is the stronger modality for this task.
-- Exact-match support/conflict cases against text-only:
-  - GMU correct and text-only wrong: **601 movies**
-  - GMU wrong and text-only correct: **749 movies**
-  - Both correct: **576 movies**
-  - Both wrong: **5,880 movies**
+- GMU without modality dropout is slightly better than GMU with dropout on macro-F1: **0.588 vs 0.586**.
+- Missing-modality evaluation:
+  - GMU without dropout: image dropped **0.523**, text dropped **0.285**.
+  - GMU with dropout: image dropped **0.540**, text dropped **0.287**.
+- Exact-match support/conflict cases for GMU without dropout against text-only:
+  - GMU correct and text-only wrong: **570 movies**
+  - GMU wrong and text-only correct: **847 movies**
+  - Both correct: **573 movies**
+  - Both wrong: **5,815 movies**
 
 The fusion result is an improvement over unimodal on macro-F1, but it is not a claim that multimodal helps on every movie.
 
@@ -63,14 +71,14 @@ ResNet-50 and BERT are both unfrozen and trained end-to-end with the GMU classif
 
 | Model | Macro-F1 | Micro-F1 | Sample F1 | Exact match |
 |---|---:|---:|---:|---:|
-| End-to-end multimodal GMU fine-tune | **0.596** | 0.670 | 0.669 | 0.194 |
+| End-to-end multimodal GMU fine-tune | **0.597** | 0.670 | 0.672 | 0.177 |
 
-This is better than the frozen-encoder GMU variant by **+0.007 macro-F1** and gives the best exact-match score of all reported models (**0.194**).
+This is better than the frozen-encoder GMU variant by **+0.008 macro-F1**. Text-only BERT has a comparable exact-match score of **0.182**, so the joint model does not dominate every metric.
 
 Missing-modality behavior for the fine-tuned model:
 
-- Image dropped: macro-F1 **0.582**.
-- Text dropped: macro-F1 **0.204**.
+- Image dropped: macro-F1 **0.581**.
+- Text dropped: macro-F1 **0.191**.
 
 The full-model gain is real, but the text modality remains critical when the model was trained jointly.
 
