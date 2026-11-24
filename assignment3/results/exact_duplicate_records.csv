@@ -1,0 +1,7 @@
+id1,id2,image_exact,text_exact,phash_distance,text_cosine_similarity,shared_genre_count
+2610,24538,True,True,0,0.9999999999999998,5
+9103,14290,True,True,0,1.0,1
+9538,25589,True,True,0,0.9999999999999981,5
+10875,13532,True,True,0,0.9999999999999993,2
+18745,23939,True,True,0,0.9999999999999988,4
+19999,20778,True,True,0,1.0,2
