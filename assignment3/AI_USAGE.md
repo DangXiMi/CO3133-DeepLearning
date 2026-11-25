@@ -61,3 +61,18 @@
 - Affected files: `utils/mmimdb.py`; `assignment3/src/models.py`; `assignment3/notebooks/main.ipynb`; `assignment3/notebooks/m3.ipynb`; `assignment3/notebooks/finetune_gmu.ipynb`; `assignment3/results/dedup_dropped_indices.csv`
 - Responsible member: Nguyen Van An
 - Sources: `assignment3/results/exact_duplicate_records.csv`; assignment 3 proposal and handbook §28.1 on leakage prevention
+
+**Entry 6 — EDA implementation**
+- Tool: ChatGPT, Codex (GPT6.2-Sol)
+- Used by: Huynh Vuong Khang
+- Stage: A3 M2 development — EDA tasks implementation (24 Nov 2026)
+- Purpose: Implement proposed EDA tasks, including inspections for genre distribution, data validity, text lengths and image resolution, duplicate records and verification of multi-label stratified splitting. 
+- Prompt summary: implement the EDA tasks mention above. For duplicate detection:
+    + Text modality: use SHA-256 to detect exact duplicate, TF-IDF + cosine similarity to detect plot summaries with similar semantics (near-duplicate).
+    + Image modality: use SHA-256 to detect exact duplicate, pHash + Hamming distance to detect near-duplicate images, only compare posters that share at least 2 genre labels.
+    + Detect records with duplicates on both modalities.
+- AI contribution: provide implementation.
+- Student verification: the group reviewed EDA notebook, the duplicate is re-run with the genre constraint for image modality relaxed and yields the same result (6 exact duplicate record pairs, 0 near duplicate records).
+- Affected files: `assignment3/notebooks/mmimdb_eda.ipynb`; `assignment3/results/exact_duplicate_records.csv`
+- Responsible member: Huynh Vuong Khang
+- Sources: reused duplicate detection methods from the previous assignments, (TF-IDF)[https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html].
